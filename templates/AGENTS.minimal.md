@@ -31,7 +31,3 @@ If the blocker requires unsupported domain assumptions or missing authoritative 
 ## Review
 
 Use tests/lint/type checks as appropriate. High-risk changes should receive a fresh independent review when practical.
-
-## Documents
-
-Follow `policies/DOCUMENT_NAMING.md` for new durable specifications, plans, architecture records, standalone reviews, and reports. Allocate the next `NNNN_TYPE_SCOPE.md` ID in `docs/0000_DOCUMENT_INDEX.md`; keep dates and mutable status inside the document. Preserve conventional stable-path files and do not mass-rename legacy documents during unrelated work.

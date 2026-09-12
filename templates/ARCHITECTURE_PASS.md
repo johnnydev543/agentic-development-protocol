@@ -41,8 +41,6 @@ Create or update docs/implementation-handoff.md with:
 - Remaining implementation tasks
 - High-risk remaining work
 
-When creating any additional durable architecture/specification document, follow policies/DOCUMENT_NAMING.md: allocate the next NNNN_TYPE_SCOPE.md identity and register it in docs/0000_DOCUMENT_INDEX.md. Keep the well-known implementation handoff path unchanged.
-
 Each remaining task should include:
 - task ID and status;
 - relevant files/modules;

@@ -103,12 +103,6 @@ Recommended progression:
 architecture baseline → task commits → review findings → review-fix commits → verification
 ```
 
-## Document Identity
-
-Number new durable specifications, plans, architecture records, standalone review reports, and research/governance artifacts according to `policies/DOCUMENT_NAMING.md`.
-
-Use the next repository-wide `NNNN_TYPE_SCOPE.md` identity and register it in `docs/0000_DOCUMENT_INDEX.md`. Keep dates, status, version, review provenance, and Git baselines inside the document. Never reuse an ID or mass-rename legacy documents during unrelated work. Stable tool-addressed files such as handoff and findings ledgers retain their fixed paths.
-
 ## Efficiency
 
 Strong models resolve uncertainty. Lower-cost models execute known solutions. Cost optimization never justifies inventing or weakening domain truth.

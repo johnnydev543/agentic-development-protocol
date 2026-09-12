@@ -127,16 +127,6 @@ Prefer clear phase/task commits such as:
 
 Review against the correct baseline/diff rather than an undifferentiated repository snapshot.
 
-## Document Identity
-
-For new specifications, plans, architecture records, standalone reviews, reports, and similar durable artifacts, follow `policies/DOCUMENT_NAMING.md`.
-
-- Allocate the next repository-wide four-digit ID.
-- Use `NNNN_TYPE_SCOPE.md` and register it in `docs/0000_DOCUMENT_INDEX.md`.
-- Keep created/updated dates, status, version, and Git baseline inside the document rather than the filename.
-- Do not renumber or mass-rename existing documents as part of unrelated work.
-- Preserve stable well-known paths such as `README.md`, `AGENTS.md`, `docs/implementation-handoff.md`, and `docs/review-findings.md`.
-
 ## Efficiency
 
 Use strong models to resolve uncertainty and lower-cost models to execute known solutions.

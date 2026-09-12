@@ -58,8 +58,6 @@ The reviewer must not silently rewrite domain semantics. Any finding that change
 
 When review and repair happen in different sessions, do not depend on chat history. Persist actionable findings in `docs/review-findings.md`.
 
-Use `policies/DOCUMENT_NAMING.md` for standalone review reports: allocate a stable `NNNN_REVIEW_SCOPE.md` filename and register it in `docs/0000_DOCUMENT_INDEX.md`. The findings ledger remains an unnumbered stable-path exception because review and fix prompts address it directly.
-
 Recommended format:
 
 ```text

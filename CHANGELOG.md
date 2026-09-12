@@ -1,14 +1,5 @@
 # Changelog
 
-## v0.3 — 2026-09-12
-
-- Added stable repository-wide document IDs using `NNNN_TYPE_SCOPE.md` for new specifications, plans, architecture records, standalone reviews, reports, and runbooks.
-- Moved dates, status, version, and Git baselines into document metadata so routine updates do not rename files or break links.
-- Reserved `docs/0000_DOCUMENT_INDEX.md` as the allocation registry and added a reusable index template.
-- Defined stable-path exceptions for conventional and tool-addressed files such as `README.md`, `AGENTS.md`, implementation handoff, and review findings ledgers.
-- Made the policy prospective to avoid unsafe mass-renaming of existing documents.
-- Added concurrent-branch collision handling and clarified that document, task, and review-finding IDs use separate sequences.
-
 ## v0.2 — 2026-09-12
 
 - Added staged development lifecycle: SPEC FINAL → ARCHITECT → HANDOFF → IMPLEMENT → REVIEW → FIX → VERIFY.

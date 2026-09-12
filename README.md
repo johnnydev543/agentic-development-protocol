@@ -190,24 +190,6 @@ Cross-model review 的目的不是盲從「更強」模型，而是用 fresh con
 - [`templates/REVIEW_PASS.md`](templates/REVIEW_PASS.md) — fresh-context review，產出可持久化 findings。
 - [`templates/REVIEW_FIX.md`](templates/REVIEW_FIX.md) — 在另一個 session 依 finding 修復並標記驗證結果。
 
-### 文件編號與穩定 identity
-
-新建立的 spec、plan、architecture record、standalone review、report 或 runbook，預設使用全 repo 遞增的四位編號：
-
-```text
-NNNN_TYPE_SCOPE.md
-
-0001_SPEC_REPORT_INGESTION.md
-0002_PLAN_REPORT_INGESTION_PHASE1.md
-0003_REVIEW_REPORT_INGESTION_PHASE1.md
-```
-
-日期不放在新編號文件的檔名中；`Created`、`Updated`、`Status`、版本與 Git baseline 寫在文件 metadata。這樣文件更新時不必改名，也不會破壞連結。
-
-使用 `docs/0000_DOCUMENT_INDEX.md` 登記編號與狀態。`README.md`、`AGENTS.md`、`docs/implementation-handoff.md`、`docs/review-findings.md` 等工具或 prompt 需要固定尋址的入口檔保留原名。既有文件採 prospective migration，不為加入編號而批次改名。
-
-完整規則見 [`policies/DOCUMENT_NAMING.md`](policies/DOCUMENT_NAMING.md)，索引範本見 [`templates/DOCUMENT_INDEX.md`](templates/DOCUMENT_INDEX.md)。
-
 ### 為什麼 policy 與 MODEL_REGISTRY 分開？
 
 `policies/*.md` 定義長期穩定的工作流程；`models/MODEL_REGISTRY.md` 定義目前哪些模型適合扮演 L0–L3、ARCHITECT、IMPLEMENT、REVIEW、FIX、VERIFY 等角色。
@@ -234,7 +216,6 @@ Frontend/UI specialist 目前為 Kimi K3。完整 mapping 見 [`models/MODEL_REG
 ├── policies/
 │   ├── MODEL_ROUTING.md
 │   ├── DEVELOPMENT_LIFECYCLE.md
-│   ├── DOCUMENT_NAMING.md
 │   ├── ESCALATION.md
 │   └── CODE_REVIEW.md
 ├── models/
@@ -243,7 +224,6 @@ Frontend/UI specialist 目前為 Kimi K3。完整 mapping 見 [`models/MODEL_REG
 │   ├── AGENTS.minimal.md
 │   ├── AGENTS.standard.md
 │   ├── AGENTS.high-risk.md
-│   ├── DOCUMENT_INDEX.md
 │   ├── ARCHITECTURE_PASS.md
 │   ├── IMPLEMENT_TASK.md
 │   ├── REVIEW_PASS.md
@@ -265,7 +245,6 @@ Frontend/UI specialist 目前為 Kimi K3。完整 mapping 見 [`models/MODEL_REG
 7. 重要變更用 `REVIEW_PASS.md` 做 fresh-context review。
 8. 跨 session findings 寫入 `docs/review-findings.md`，再使用 `REVIEW_FIX.md` 修復。
 9. 若 finding 只是明確實作問題，不必浪費 review 強模型做修復；只有 architecture/domain uncertainty 才升回高階模型。
-10. 建立 `docs/0000_DOCUMENT_INDEX.md`；新 durable documents 依 `NNNN_TYPE_SCOPE.md` 分配穩定 ID。
 
 ---
 
@@ -307,22 +286,14 @@ The architect establishes boundaries, contracts, reference patterns, high-risk c
 
 Lower-cost models execute one explicit task at a time. Review uses fresh context when appropriate. Cross-session findings are persisted in `docs/review-findings.md`. Straightforward findings can be fixed by lower-cost models; architecture/domain findings route back upward.
 
-### Stable document identities
-
-New specifications, plans, architecture records, standalone reviews, reports, and runbooks use a repository-wide `NNNN_TYPE_SCOPE.md` sequence. Store created/updated dates, status, version, and Git baseline inside the document so normal updates do not rename files or break links.
-
-Register allocations in `docs/0000_DOCUMENT_INDEX.md`. Keep well-known tool-addressed paths such as `README.md`, `AGENTS.md`, `docs/implementation-handoff.md`, and `docs/review-findings.md` unnumbered. Apply the rule prospectively rather than mass-renaming legacy files.
-
 ### Structure
 
 - `policies/MODEL_ROUTING.md` — L0-L3 and phase-aware routing.
 - `policies/DEVELOPMENT_LIFECYCLE.md` — architecture-to-delegation lifecycle.
-- `policies/DOCUMENT_NAMING.md` — stable numbered identities for durable documents.
 - `policies/ESCALATION.md` — stop conditions and escalation package.
 - `policies/CODE_REVIEW.md` — review, persisted findings, and review-fix routing.
 - `models/MODEL_REGISTRY.md` — current model-to-level and model-to-phase mapping.
 - `templates/AGENTS.*.md` — project agent policies.
-- `templates/DOCUMENT_INDEX.md` — `docs/0000_DOCUMENT_INDEX.md` starter.
 - `templates/ARCHITECTURE_PASS.md` — architecture prompt.
 - `templates/IMPLEMENT_TASK.md` — delegated implementation prompt.
 - `templates/REVIEW_PASS.md` — independent review prompt.
@@ -336,4 +307,4 @@ Do not automatically use the reviewer to implement its findings. Use a lower-cos
 
 ### Status
 
-v0.3 — staged multi-model workflow with stable document identities.
+v0.2 — staged multi-model development workflow.
