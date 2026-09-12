@@ -24,7 +24,6 @@ If a finding requires a new architecture, interface/schema decision, unsupported
 After a successful fix, update the original finding in docs/review-findings.md instead of deleting it:
 
 Status: FIXED
-Fixed by commit: <sha if available>
 Fix summary: <concise description>
 Verification: <commands/results>
 

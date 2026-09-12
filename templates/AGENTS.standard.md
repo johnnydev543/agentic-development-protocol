@@ -90,7 +90,7 @@ Include:
 
 Ordinary changes: run the relevant unit/integration tests and configured lint/type checks.
 
-High-risk changes: prefer fresh-context independent review, ideally by a different model. The reviewer receives the task, specification, project rules, architecture/handoff constraints, git diff, and verification output.
+High-risk changes: prefer fresh-context independent review, ideally by a different model. The reviewer receives the task, specification, project rules, architecture/handoff constraints, explicitly named changed files/scope, and verification output.
 
 Review findings should be classified as Blocker, Major, Minor, or Suggestion and should use stable finding IDs such as `RVW-001`.
 
@@ -111,21 +111,12 @@ After fixing, update the original finding rather than deleting it:
 - `Status: FIXED`
 - concise fix summary
 - verification performed
-- commit SHA if available
 
 A finding is not FIXED merely because code changed; verification must pass.
 
-## Git Discipline
+## Handoff Scope
 
-Use Git as the handoff backbone.
-
-Prefer clear phase/task commits such as:
-
-- `arch: establish core application architecture`
-- `feat: implement TASK-001 ...`
-- `fix: resolve RVW-003 ...`
-
-Review against the correct baseline/diff rather than an undifferentiated repository snapshot.
+Git-based phase handoff is temporarily disabled. Name the selected task/finding, changed files or components, and verification results. Do not require a phase-specific commit or Git baseline before proceeding.
 
 ## Efficiency
 

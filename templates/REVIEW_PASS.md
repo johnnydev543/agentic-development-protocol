@@ -9,7 +9,7 @@ Read:
 - AGENTS.md
 - authoritative specification
 - docs/implementation-handoff.md if present
-- the Git diff from the intended baseline
+- explicitly named changed files and review scope
 - relevant tests
 - verification output
 

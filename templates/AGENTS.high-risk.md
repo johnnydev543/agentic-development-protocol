@@ -79,7 +79,7 @@ Independent review is required or strongly preferred for changes affecting:
 
 Prefer a fresh reviewer with a different model perspective when practical.
 
-The reviewer must receive the task, specification, project rules, architecture/handoff constraints, git diff, and verification output and classify findings as Blocker/Major/Minor/Suggestion.
+The reviewer must receive the task, specification, project rules, architecture/handoff constraints, explicitly named changed files/scope, and verification output and classify findings as Blocker/Major/Minor/Suggestion.
 
 Persist actionable cross-session findings in `docs/review-findings.md` with stable IDs such as `RVW-001`.
 
@@ -91,17 +91,11 @@ Use a lower-cost model when the fix is explicit, localized, supported by existin
 
 Route back to L3 if the finding exposes an architecture flaw, schema/interface decision, ambiguous provenance/domain meaning, uncertain root cause, or another high-risk semantic decision.
 
-After a successful fix, retain the original finding and mark it FIXED with a concise summary, verification evidence, and commit SHA when available. Never mark FIXED only because code changed.
+After a successful fix, retain the original finding and mark it FIXED with a concise summary and verification evidence. Never mark FIXED only because code changed.
 
-## Git Discipline
+## Handoff Scope
 
-Use explicit commits to preserve architecture and task baselines. Review the intended diff rather than the entire repository state whenever possible.
-
-Recommended progression:
-
-```text
-architecture baseline → task commits → review findings → review-fix commits → verification
-```
+Git-based phase handoff is temporarily disabled. Name the selected task/finding, changed files or components, and verification results. Do not require a phase-specific commit or Git baseline before proceeding.
 
 ## Efficiency
 

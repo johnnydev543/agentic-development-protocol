@@ -38,7 +38,7 @@ The reviewer should receive:
 - Authoritative specification.
 - Relevant project rules (`AGENTS.md`).
 - Architecture/handoff invariants if present.
-- Git diff from the intended baseline.
+- Explicitly named changed files and review scope.
 - Test/lint/type-check output.
 
 ## Finding Severity
@@ -81,7 +81,6 @@ After repair, keep the original finding and update it:
 
 ```text
 Status: FIXED
-Fixed by commit: <sha if available>
 Fix summary: ...
 Verification: ...
 ```

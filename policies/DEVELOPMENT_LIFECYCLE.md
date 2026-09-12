@@ -138,7 +138,7 @@ The reviewer receives:
 - authoritative specification;
 - `AGENTS.md`;
 - relevant architecture/handoff rules;
-- Git diff from the intended baseline;
+- explicitly named changed files and review scope;
 - test/lint/type-check results.
 
 Findings must be concrete and classified as Blocker, Major, Minor, or Suggestion.
@@ -203,7 +203,6 @@ After fixing, the implementation agent should update the same entry:
 
 ```text
 Status: FIXED
-Fixed by commit: <sha if available>
 Fix summary: ...
 Verification: ...
 ```
@@ -225,35 +224,9 @@ Verification should include the relevant subset of:
 
 For high-risk changes, run fresh-context review again if the fix materially changed architecture/domain behavior or if the original reviewer requested re-review.
 
-## Git as the handoff backbone
+## Temporary Handoff Rule
 
-Use Git to make phase boundaries explicit.
-
-Recommended sequence:
-
-```text
-architecture baseline commit
-    ↓
-TASK-001 commit
-    ↓
-TASK-002 commit
-    ↓
-review findings
-    ↓
-review-fix commit(s)
-    ↓
-verification
-```
-
-Example commit messages:
-
-```text
-arch: establish core application architecture
-feat: implement TASK-001 report ingestion
-fix: resolve RVW-003 provider normalization issue
-```
-
-The reviewer should compare against the correct baseline instead of reviewing an undifferentiated repository snapshot.
+Git-based phase handoff is currently disabled. Use the selected `TASK-###`, explicitly named changed files/scope, `RVW-###` findings, and verification results as the cross-session handoff record. Normal version control may continue, but agents must not require phase-specific commits or Git baselines to proceed.
 
 ## Decision rule
 

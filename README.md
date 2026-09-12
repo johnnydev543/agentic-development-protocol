@@ -20,7 +20,7 @@
 - 為失敗嘗試設定明確停止條件與交接格式。
 - 讓 review 與 review-fix 可以跨 session、跨模型可靠傳遞。
 - 讓高風險修改接受 fresh-context／cross-model 獨立審查。
-- 用 Git diff、handoff files 與 task IDs 作為 agent 之間的共同狀態。
+- 用 handoff files、task IDs、review scope 與 verification 作為 agent 之間的共同狀態。
 - 將長期穩定的 routing 原則與快速變動的模型映射分開維護。
 - 提供可直接放入新專案的 `AGENTS.md` 與 prompt 範本。
 
@@ -111,7 +111,7 @@ Flash／較低成本模型一次只做一個 task。不要下「把剩下的全�
 
 #### REVIEW
 
-重要變更使用 fresh-context reviewer，能跨模型時優先跨模型。Reviewer 應看原始 task、spec、`AGENTS.md`、handoff invariants、Git diff 與 verification output。
+重要變更使用 fresh-context reviewer，能跨模型時優先跨模型。Reviewer 應看原始 task、spec、`AGENTS.md`、handoff invariants、明確指定的變更範圍與 verification output。
 
 Finding 分為 Blocker / Major / Minor / Suggestion，並使用穩定 ID，例如 `RVW-003`。
 
@@ -126,7 +126,7 @@ Review finding 不代表一定要由原 review 強模型修。
 
 `docs/review-findings.md`
 
-修正後保留原 finding，更新為 `FIXED` 並記錄 fix summary、verification、commit SHA（若可得）。不要只因「有改 code」就標記完成。
+修正後保留原 finding，更新為 `FIXED` 並記錄 fix summary 與 verification。不要只因「有改 code」就標記完成。
 
 #### VERIFY
 
@@ -134,33 +134,9 @@ task／finding 的完成條件是驗證通過，而不是 code 已修改。依�
 
 完整流程見 [`policies/DEVELOPMENT_LIFECYCLE.md`](policies/DEVELOPMENT_LIFECYCLE.md)。
 
-### Git 是 handoff backbone
+### Handoff（Git 模式暫停）
 
-建議 sequence：
-
-```text
-architecture baseline commit
-        ↓
-TASK-001 commit
-        ↓
-TASK-002 commit
-        ↓
-review findings
-        ↓
-review-fix commit(s)
-        ↓
-verification
-```
-
-例如：
-
-```text
-arch: establish core application architecture
-feat: implement TASK-001 report ingestion
-fix: resolve RVW-003 provider normalization issue
-```
-
-這讓 reviewer 可以看「architecture baseline vs Flash implementation」或「review finding vs fix」，而不是面對一次混在一起的大型 diff。
+目前不要求 phase-specific commits 或 Git baseline。跨 session 以指定的 `TASK-###`、明確變更範圍、`RVW-###` finding 與 verification 結果交接。一般版本控制仍可照專案習慣使用，但不是 agent 開始工作前的必要條件。
 
 ### Escalation：兩次失敗規則
 
@@ -241,7 +217,7 @@ Frontend/UI specialist 目前為 Kimi K3。完整 mapping 見 [`models/MODEL_REG
 3. 規格定案後，以 `ARCHITECTURE_PASS.md` 讓強模型建立 architecture skeleton。
 4. 要求 architect 寫出 `docs/implementation-handoff.md`。
 5. 用 `IMPLEMENT_TASK.md` 一次派一個 task 給 Flash／較低成本模型。
-6. 每個 task 使用獨立 Git commit 或至少保留清楚 baseline。
+6. 明確列出每個 task 的檔案／元件範圍與驗證方式；暫不使用 Git handoff。
 7. 重要變更用 `REVIEW_PASS.md` 做 fresh-context review。
 8. 跨 session findings 寫入 `docs/review-findings.md`，再使用 `REVIEW_FIX.md` 修復。
 9. 若 finding 只是明確實作問題，不必浪費 review 強模型做修復；只有 architecture/domain uncertainty 才升回高階模型。

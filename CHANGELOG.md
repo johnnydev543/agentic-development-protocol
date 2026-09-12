@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.2.1 — 2026-09-12
+
+- Restored self-contained phase prompts after the context-deduplication experiment caused unreliable tool-driven reading in some model integrations.
+- Removed the repository-wide durable-document numbering policy; stable `RVW-###` review finding IDs remain.
+- Temporarily disabled Git-based phase handoff. Tasks, explicit change scope, review findings, and verification results are the handoff record.
+
 ## v0.2 — 2026-09-12
 
 - Added staged development lifecycle: SPEC FINAL → ARCHITECT → HANDOFF → IMPLEMENT → REVIEW → FIX → VERIFY.
