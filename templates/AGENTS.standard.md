@@ -142,3 +142,5 @@ For new specifications, plans, architecture records, standalone reviews, reports
 Use strong models to resolve uncertainty and lower-cost models to execute known solutions.
 
 Do not escalate merely because a task is large. Escalate because uncertainty, risk, repeated failure, or domain judgment exceeds the current level.
+
+Load context by phase. Do not read every policy, template, specification, or historical review by default. Use the minimum context matrix in `policies/DEVELOPMENT_LIFECYCLE.md`; once a model is selected, do not load the model registry unless routing must be reconsidered.

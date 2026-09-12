@@ -20,6 +20,8 @@ Classify substantial work as:
 
 Use the project's model registry when model selection is available.
 
+Load policies, templates, specifications, and historical reviews only when the current phase/task requires them. Do not read the full documentation tree by default.
+
 ## Escalation
 
 After 2 materially different unsuccessful fixes for the same failure, STOP. Do not make a third speculative modification.

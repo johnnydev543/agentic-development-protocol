@@ -7,6 +7,7 @@ Review the implementation for <TASK-ID or change scope>.
 
 Read:
 - AGENTS.md
+- policies/CODE_REVIEW.md
 - authoritative specification
 - docs/implementation-handoff.md if present
 - the Git diff from the intended baseline
@@ -15,37 +16,7 @@ Read:
 
 Your job is to identify defects, regressions, architecture violations, missing tests, and unsupported assumptions. Do not automatically rewrite the implementation.
 
-Classify each finding as:
-- Blocker
-- Major
-- Minor
-- Suggestion
-
-For every actionable finding, provide:
-- Finding ID (RVW-###)
-- Severity
-- Affected files/symbols
-- Observed problem
-- Why it matters
-- Required fix
-- Verification needed
-
-Persist actionable findings to docs/review-findings.md using this structure:
-
-## RVW-001 — Major
-Status: OPEN
-Task: <TASK-ID>
-Files:
-- ...
-
-Finding:
-...
-
-Required fix:
-...
-
-Verification:
-- ...
+Use the severity, stable `RVW-###` fields, status, and persistence format defined in `policies/CODE_REVIEW.md`. Persist actionable findings to `docs/review-findings.md`.
 
 If a standalone review report is required, follow policies/DOCUMENT_NAMING.md: allocate the next NNNN_REVIEW_SCOPE.md filename, add its metadata header, and register it in docs/0000_DOCUMENT_INDEX.md. Do not rename the stable findings ledger.
 
