@@ -11,11 +11,16 @@ Before editing, read:
 - the selected task
 - the files/tests directly referenced by that task
 
-The project rules and selected task are authoritative. Do not load unrelated lifecycle templates, historical reviews, or model-selection documents.
-
 Scope is limited to <TASK-ID>.
 
-Follow the recorded architecture and implement only the selected task. Add its tests and run the relevant checks. Do not refactor unrelated code. If completion requires changing an invariant, interface/schema, dependency direction, or domain meaning, STOP and report the blocker.
+Requirements:
+1. Follow the existing architecture, interfaces, schemas, dependency direction, and reference implementation patterns.
+2. Implement only the selected task.
+3. Add or update the tests required by the task.
+4. Run the relevant tests plus configured lint/type checks for the affected scope.
+5. Do not modify unrelated files or refactor unrelated code.
+6. Do not redesign module boundaries, public interfaces, schemas, or dependency direction unless the task explicitly authorizes it.
+7. If completion requires an architectural or domain-semantic change, STOP and report the blocker instead of silently redesigning the system.
 
 When complete, update docs/implementation-handoff.md:
 - set <TASK-ID> to DONE only if verification passes;

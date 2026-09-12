@@ -33,12 +33,6 @@
 
 因此「程式很多」不等於一定要用最強模型；如果 architecture、schema、interface 與 acceptance criteria 已經定案，大量 implementation 仍可交給較便宜模型。反過來，一個只改幾行的 schema／provenance／domain semantics 變更也可能直接需要 L3。
 
-### Context 按需載入
-
-`AGENTS.md` 保存每次任務都必須遵守的 project/domain invariants；其他文件各自只有一個完整權威來源。每個 phase 只讀當下需要的 policy、task/finding、spec、diff 與 verification，不要要求 agent 先讀完整 `policies/`、所有 templates、歷史 reviews 或整個 `docs/`。
-
-例如 IMPLEMENT 通常只需要 `AGENTS.md`、指定 `TASK-###`、controlling spec 與直接相關的 code/tests；模型已選定時不需要再讀 model registry。REVIEW 則讀 `AGENTS.md`、code review policy、spec、目標 Git diff 與 verification output。完整矩陣見 [`policies/DEVELOPMENT_LIFECYCLE.md`](policies/DEVELOPMENT_LIFECYCLE.md)。
-
 ### L0–L3 任務路由
 
 | 層級 | 定位 | 適合的工作 | 目前主要模型 |
@@ -291,10 +285,6 @@ A model-agnostic routing, escalation, handoff, and review policy for AI coding a
 
 A large task can still be delegated when architecture and semantics are explicit. A small change can require L3 when it changes architecture, schema, provenance, or domain meaning.
 
-### Load context on demand
-
-Keep always-applicable project/domain invariants in `AGENTS.md`, and give every other concern one canonical source. Each phase should load only its current policy, task/finding, controlling specification, diff, and verification evidence. Do not preload every policy, template, historical review, or document. See `policies/DEVELOPMENT_LIFECYCLE.md` for the minimum context matrix.
-
 ### Recommended staged workflow
 
 ```text
@@ -346,4 +336,4 @@ Do not automatically use the reviewer to implement its findings. Use a lower-cos
 
 ### Status
 
-v0.4 — staged multi-model workflow with canonical policy ownership and phase-scoped context loading.
+v0.3 — staged multi-model workflow with stable document identities.

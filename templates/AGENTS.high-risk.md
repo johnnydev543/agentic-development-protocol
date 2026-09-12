@@ -112,5 +112,3 @@ Use the next repository-wide `NNNN_TYPE_SCOPE.md` identity and register it in `d
 ## Efficiency
 
 Strong models resolve uncertainty. Lower-cost models execute known solutions. Cost optimization never justifies inventing or weakening domain truth.
-
-Load only the policy, specification, task/finding, diff, and evidence required by the current phase. Do not preload all templates, historical reviews, or unrelated documents. Follow the minimum context matrix in `policies/DEVELOPMENT_LIFECYCLE.md`.

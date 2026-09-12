@@ -1,13 +1,5 @@
 # Changelog
 
-## v0.4 — 2026-09-12
-
-- Assigned one canonical source to routing, lifecycle, escalation, review, document identity, handoff tasks, and review findings.
-- Added a minimum context matrix for ARCHITECT, IMPLEMENT, REVIEW, FIX, and VERIFY.
-- Explicitly prohibited preloading all policies, templates, specifications, historical reviews, or model-selection material for every task.
-- Reduced duplicated review/fix schema and implementation rules in phase prompts by referring to their canonical policy or ledger.
-- Clarified that project/domain invariants belong in `AGENTS.md` while task-specific invariants belong in the handoff.
-
 ## v0.3 — 2026-09-12
 
 - Added stable repository-wide document IDs using `NNNN_TYPE_SCOPE.md` for new specifications, plans, architecture records, standalone reviews, reports, and runbooks.
