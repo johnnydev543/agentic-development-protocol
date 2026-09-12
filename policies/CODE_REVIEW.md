@@ -58,6 +58,8 @@ The reviewer must not silently rewrite domain semantics. Any finding that change
 
 When review and repair happen in different sessions, do not depend on chat history. Persist actionable findings in `docs/review-findings.md`.
 
+If a standalone review report is needed, name it `NNNN_REVIEW_SCOPE.md` and register the next unused review document number in `docs/0000_DOCUMENT_INDEX.md`. This numbering applies only to standalone review reports; the findings ledger keeps its stable filename and separate `RVW-###` IDs.
+
 Recommended format:
 
 ```text

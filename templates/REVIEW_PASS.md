@@ -47,6 +47,8 @@ Required fix:
 Verification:
 - ...
 
+When producing a standalone review report, use the next `NNNN_REVIEW_SCOPE.md` number recorded in docs/0000_DOCUMENT_INDEX.md. Do not rename docs/review-findings.md or derive its `RVW-###` IDs from the document number.
+
 Do not invent or silently change authoritative domain semantics. If correctness depends on missing or conflicting requirements, record that explicitly and route it for clarification/architecture review.
 
 A clean review should say that no Blocker/Major/Minor findings were found and list any residual verification limits.

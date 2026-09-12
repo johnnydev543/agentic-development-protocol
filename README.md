@@ -128,6 +128,8 @@ Review finding 不代表一定要由原 review 強模型修。
 
 修正後保留原 finding，更新為 `FIXED` 並記錄 fix summary 與 verification。不要只因「有改 code」就標記完成。
 
+若需要獨立 review 報告，僅該類文件使用 `NNNN_REVIEW_SCOPE.md`，並在 `docs/0000_DOCUMENT_INDEX.md` 登記。這不擴及 spec、plan 或 architecture 文件；`docs/review-findings.md` 仍使用固定路徑與獨立的 `RVW-###` 編號。
+
 #### VERIFY
 
 task／finding 的完成條件是驗證通過，而不是 code 已修改。依風險執行 unit test、integration test、lint、type check、build/import/startup smoke test 與 regression test。

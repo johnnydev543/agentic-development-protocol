@@ -5,6 +5,7 @@
 - Restored self-contained phase prompts after the context-deduplication experiment caused unreliable tool-driven reading in some model integrations.
 - Removed the repository-wide durable-document numbering policy; stable `RVW-###` review finding IDs remain.
 - Temporarily disabled Git-based phase handoff. Tasks, explicit change scope, review findings, and verification results are the handoff record.
+- Retained lightweight four-digit numbering only for optional standalone review reports; `RVW-###` remains the independent actionable-finding sequence.
 
 ## v0.2 — 2026-09-12
 
