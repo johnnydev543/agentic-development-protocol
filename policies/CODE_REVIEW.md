@@ -10,6 +10,7 @@ For ordinary changes, complete the relevant subset of:
 2. Integration tests, if available.
 3. Lint checks, if configured.
 4. Type checks, if configured.
+5. Build/import/startup smoke checks when relevant.
 
 ## Independent Review
 
@@ -33,10 +34,11 @@ Prefer a fresh-context reviewer different from the implementation model when pra
 
 The reviewer should receive:
 
-- Original task.
+- Original task or task ID.
 - Authoritative specification.
-- Relevant project rules.
-- Git diff.
+- Relevant project rules (`AGENTS.md`).
+- Architecture/handoff invariants if present.
+- Git diff from the intended baseline.
 - Test/lint/type-check output.
 
 ## Finding Severity
@@ -48,7 +50,65 @@ Classify findings as:
 - Minor
 - Suggestion
 
+Each actionable finding should also have a stable ID such as `RVW-001` and include affected files/symbols, the observed problem, why it matters, required correction, and required verification.
+
 The reviewer must not silently rewrite domain semantics. Any finding that changes authoritative business/domain meaning must be supported by a source/specification or escalated for clarification.
+
+## Persist Findings Across Sessions
+
+When review and repair happen in different sessions, do not depend on chat history. Persist actionable findings in `docs/review-findings.md`.
+
+Recommended format:
+
+```text
+## RVW-001 — Major
+Status: OPEN
+Task: TASK-003
+Files:
+- src/...
+
+Finding:
+...
+
+Required fix:
+...
+
+Verification:
+- ...
+```
+
+After repair, keep the original finding and update it:
+
+```text
+Status: FIXED
+Fixed by commit: <sha if available>
+Fix summary: ...
+Verification: ...
+```
+
+If the implementer believes the finding is invalid, mark it `NEEDS-REVIEW` with evidence rather than silently deleting or closing it.
+
+## Who Should Fix Review Findings?
+
+Do not automatically use the review model to implement its findings.
+
+Prefer a lower-cost implementation model when the finding is localized, explicit, pattern-following, supported by existing architecture/semantics, and testable without a new design decision.
+
+Route the fix to a strong model when the finding exposes:
+
+- an architecture flaw;
+- an interface or schema decision that must change;
+- unsupported domain/provenance/timing semantics;
+- uncertain cross-module root cause;
+- another high-risk decision not settled by the specification.
+
+This preserves strong-model capacity for decisions rather than deterministic repair work.
+
+## Fix Completion
+
+A finding is not resolved merely because code changed.
+
+Mark it `FIXED` only after the requested verification passes. For Blocker/Major findings or changes that materially alter architecture/domain behavior, perform re-review when appropriate.
 
 ## Cross-Model Review
 
