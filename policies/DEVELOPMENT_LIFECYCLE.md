@@ -22,6 +22,8 @@ VERIFY
 
 This lifecycle complements L0-L3 routing. The lifecycle answers **what phase the repository is in**; L0-L3 answers **how much reasoning capacity the current task requires**.
 
+New specifications, plans, architecture records, review artifacts, and reports should follow `policies/DOCUMENT_NAMING.md`: use a stable `NNNN_TYPE_SCOPE.md` identity, register it in `docs/0000_DOCUMENT_INDEX.md`, and keep dates/status inside the document. Well-known handoff ledgers retain their stable paths.
+
 ## 1. SPEC FINAL
 
 Do not begin the architecture pass until the authoritative requirements are sufficiently stable for implementation.
@@ -140,6 +142,8 @@ The reviewer receives:
 - relevant architecture/handoff rules;
 - Git diff from the intended baseline;
 - test/lint/type-check results.
+
+If review produces a standalone artifact in addition to the findings ledger, give it the next numbered document ID and register it in the document index.
 
 Findings must be concrete and classified as Blocker, Major, Minor, or Suggestion.
 

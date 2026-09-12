@@ -51,3 +51,7 @@ Provide the standard escalation package from `policies/ESCALATION.md`.
 Independent review is strongly preferred for financial calculations, extraction semantics, consensus/revision logic, normalization, ticker/company mapping, market classification, timestamp/information-cutoff logic, provenance, backtesting, and database changes affecting historical financial data.
 
 The reviewer must not silently rewrite financial meaning. Any semantic change must be supported by the authoritative specification/source or escalated for clarification.
+
+## Document Identity
+
+Use `policies/DOCUMENT_NAMING.md` for new durable specifications, plans, architecture records, standalone reviews, and research reports. Allocate the next repository-wide `NNNN_TYPE_SCOPE.md` ID in `docs/0000_DOCUMENT_INDEX.md`; keep dates, status, provenance, and Git baselines inside the document. Do not mass-rename existing records or change stable handoff-ledger paths during unrelated work.
