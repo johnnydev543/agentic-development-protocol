@@ -9,6 +9,7 @@
 - Run relevant tests and configured lint/type checks.
 - Do not silently reinterpret requirements.
 - Do not invent missing domain rules, mappings, timestamps, or values.
+- Use strong models for decisions; use lower-cost models for execution once the decision is explicit.
 
 ## Task Routing
 
@@ -24,6 +25,40 @@ Do not force every task to start at L0/L1. Route directly to L3 when architectur
 If the solution is specified and only implementation remains, prefer L0-L2.
 
 The agent must not claim that it switched models unless the environment actually did so.
+
+## Development Phase
+
+Also identify the current phase:
+
+- SPEC FINAL
+- ARCHITECT
+- HANDOFF
+- IMPLEMENT
+- REVIEW
+- FIX
+- VERIFY
+
+Task level and phase are separate. A large IMPLEMENT task may still belong to L1/L2 if architecture is settled; a small FIX may require L3 if it changes architecture or semantics.
+
+### Architecture pass
+
+When acting as architect, establish module boundaries, interfaces, schemas, dependency direction, shared infrastructure, high-risk core logic, and representative reference implementations.
+
+Do not continue into repetitive implementation merely to make the product feature-complete.
+
+Create/update `docs/implementation-handoff.md` with architecture completed, architecture invariants, remaining implementation tasks, and high-risk remaining work.
+
+### Delegated implementation
+
+When implementing from `docs/implementation-handoff.md`:
+
+- execute one selected task at a time;
+- follow existing architecture/reference patterns;
+- stay within scope;
+- add required tests;
+- stop instead of redesigning architecture when blocked;
+- mark the task DONE only after verification passes;
+- do not automatically begin the next task.
 
 ## Escalation
 
@@ -55,11 +90,42 @@ Include:
 
 Ordinary changes: run the relevant unit/integration tests and configured lint/type checks.
 
-High-risk changes: prefer fresh-context independent review, ideally by a different model. The reviewer receives the task, specification, project rules, git diff, and verification output.
+High-risk changes: prefer fresh-context independent review, ideally by a different model. The reviewer receives the task, specification, project rules, architecture/handoff constraints, git diff, and verification output.
 
-Review findings should be classified as Blocker, Major, Minor, or Suggestion.
+Review findings should be classified as Blocker, Major, Minor, or Suggestion and should use stable finding IDs such as `RVW-001`.
+
+Persist cross-session findings in `docs/review-findings.md` rather than relying on chat history.
 
 A reviewer must not silently redefine domain semantics.
+
+## Review Fix
+
+Do not assume the reviewer must perform the fix.
+
+Use a lower-cost model for a localized, explicit, pattern-following fix covered by existing architecture and tests.
+
+Escalate the fix to L3 when the finding exposes an architecture flaw, interface/schema decision, unsupported domain meaning, uncertain root cause, or high-risk cross-module semantic change.
+
+After fixing, update the original finding rather than deleting it:
+
+- `Status: FIXED`
+- concise fix summary
+- verification performed
+- commit SHA if available
+
+A finding is not FIXED merely because code changed; verification must pass.
+
+## Git Discipline
+
+Use Git as the handoff backbone.
+
+Prefer clear phase/task commits such as:
+
+- `arch: establish core application architecture`
+- `feat: implement TASK-001 ...`
+- `fix: resolve RVW-003 ...`
+
+Review against the correct baseline/diff rather than an undifferentiated repository snapshot.
 
 ## Efficiency
 
