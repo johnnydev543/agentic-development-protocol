@@ -1,77 +1,54 @@
-# Model Routing Policy
+# Task Routing and Session Authorization
 
-## Core Rule
+## Separation of Concerns
 
-Use strong models to resolve uncertainty and lower-cost models to execute known solutions.
+L0-L3 classifies the task's decision risk. It is not a model ranking and does not claim that a named model can complete that level efficiently.
 
-Routing is based on task uncertainty, risk, blast radius, and specialization—not model prestige.
+Model names, providers, product tiers, and reasoning-effort labels must not grant authority. Each session receives its authority explicitly.
 
-## Two Dimensions of Routing
+## Task Levels
 
-Use both dimensions together:
+- **L0 — Mechanical:** search, renames, localized text/config edits, simple tests, and deterministic transformations with no semantic decision.
+- **L1 — Routine implementation:** explicit local behavior, ordinary endpoints/adapters, straightforward fixes, and tests under settled contracts.
+- **L2 — Complex implementation:** difficult debugging, dependency tracing, large or multi-file implementation where architecture, interfaces, schemas, and domain semantics are already authoritative.
+- **L3 — Decision work:** architecture, interface/schema decisions, ambiguous or conflicting requirements, unsupported domain/provenance/timing interpretation, uncertain cross-module root cause, or another high-impact choice.
 
-1. **Task level (L0-L3)** — how much reasoning capacity and judgment this task requires.
-2. **Development phase** — whether the repository is currently in architecture, delegated implementation, review, review-fix, or verification.
+Repository size and file count do not by themselves make work L3. A large settled implementation may be L2; a ten-line semantic decision may be L3.
 
-A large implementation task does not automatically require a strong model if architecture and semantics are already settled. Conversely, a small-looking change may require L3 if it changes an interface, schema, provenance rule, or other high-impact semantic decision.
+## Session Authorization
 
-See `policies/DEVELOPMENT_LIFECYCLE.md` for the staged workflow.
+Every working session must state:
 
-## Levels
+```text
+Role: <PLAN / PLAN-REVIEW / IMPLEMENT / REVIEW / REVIEW-AND-FIX / FIX / RE-REVIEW / DECISION / VERIFY>
+Assigned execution level: <L0 / L1 / L2 / L3>
+Maximum authorized level: <L0 / L1 / L2 / L3>
+Task or review scope: <explicit scope>
+```
 
-### L0 — Fast / Mechanical
-Use for repository search, explanation, renames, localized config/text changes, simple logging, simple tests, and mechanical refactors with no domain-semantic change.
+The maximum authorized level is an execution boundary, not an estimate of model intelligence.
 
-### L1 — Routine Implementation
-Use for implementation from an explicit specification, CRUD/API work, schemas, adapters with already-defined semantics, straightforward bug fixes, routine frontend/backend work, and normal tests.
+An agent may classify work above its maximum. Detection does not grant permission to perform it. If any required work exceeds the maximum authorized level, the agent must:
 
-### L2 — Complex Engineering
-Use for non-trivial multi-file changes, dependency tracing, difficult debugging with evidence, repo-scale implementation, reliability/performance work, and large tasks whose architecture and semantics are already defined.
+1. stop before planning, architectural decomposition, design, file edits, or implementation;
+2. output only `ESCALATION_REQUIRED` and the package in `policies/ESCALATION.md`;
+3. identify the unresolved decision that requires the higher level;
+4. end the task.
 
-### L3 — Architecture / High Uncertainty
-Use for architecture design, conflicting or ambiguous specifications, difficult cross-module root-cause analysis, domain interpretation, source/provenance semantics, and high-impact data-model decisions.
+It must not silently downgrade the task, create implementation tasks whose boundaries require unresolved L3 decisions, or continue merely because it believes itself capable.
 
-## Phase-Aware Routing
+Mechanical subdivision is allowed below L3 only when boundaries, interfaces, schemas, semantics, and acceptance criteria are already authoritative. Architectural decomposition is L3 decision work.
 
-### Architecture pass
+## Phase Routing
 
-Prefer L3 for decisions that define:
+- **PLAN:** L2 when mechanically subdividing settled work; L3 when task boundaries require architecture, interface/schema, or domain decisions.
+- **PLAN-REVIEW:** verify each task and directly amend the plan to an approvable form when authority is sufficient. Plan edits do not require another independent review.
+- **IMPLEMENT:** normally L0-L2. L3 implementation is allowed only when the session explicitly has L3 authority.
+- **REVIEW:** authorize to the risk of the reviewed change. Use fresh context for meaningful changes.
+- **REVIEW-AND-FIX:** allowed for localized, unambiguous, low-risk corrections within the session maximum. Record the finding, fix it, run verification, and close it in one session.
+- **FIX:** L0-L2 for an explicit localized correction; L3 for architecture, semantics, or uncertain root cause.
+- **RE-REVIEW:** independently verify the selected findings and the fix scope; do not assume the fixer is correct.
+- **DECISION:** resolve only the named L3 question and produce constraints plus acceptance criteria. Do not broaden into unrelated implementation.
+- **VERIFY:** run and record the required checks; passing commands do not override unresolved semantic doubt.
 
-- module/package boundaries;
-- interfaces/protocols/contracts;
-- schemas and dependency direction;
-- shared infrastructure patterns;
-- cross-module orchestration;
-- high-risk core logic.
-
-The architecture model should establish reference patterns and then stop before repetitive implementation is exhausted.
-
-### Delegated implementation
-
-Once architecture, semantics, and acceptance criteria are explicit, prefer L0-L2 depending on task size and coupling. Pattern-following work should not remain on L3 merely because L3 created the architecture.
-
-### Review
-
-Review capacity should reflect risk rather than implementation cost. High-risk or cross-module changes should receive fresh-context independent review, preferably with a different model perspective.
-
-### Review fix
-
-Do not automatically use the review model to implement its own findings.
-
-Prefer L0-L2 when a finding is localized, explicit, and testable under existing architecture. Route the fix to L3 when the finding exposes an architecture flaw, schema/interface decision, ambiguous semantics, uncertain root cause, or other high-risk judgment.
-
-## Direct Routing
-
-Do not force every task to start at L0 or L1.
-
-Route directly to L3 when the task already requires architectural judgment, unsupported domain interpretation, ambiguous provenance, high-risk timing/ordering semantics, or another decision not settled by an authoritative specification.
-
-If the solution is already specified and only implementation remains, prefer L0-L2 execution.
-
-## Specialist Routing
-
-Specialization may override generic level selection. Frontend/UI-heavy work, security review, formal methods, data engineering, or other specialized workloads may use a specialist model appropriate to that domain.
-
-## Model Identity
-
-The agent must not claim that it switched models unless the execution environment actually performed the switch. If switching is unavailable, recommend the next routing level and provide a handoff package.
+Specialization may influence which model the user selects, but selection is external to this policy. Current model preferences belong in user/session configuration, not the repository.

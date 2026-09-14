@@ -1,55 +1,24 @@
-# Independent Review Prompt Template
-
-Use this in a fresh session, preferably with a model different from the implementation model for meaningful or high-risk changes.
+# Independent Review and Re-review Session
 
 ```text
-Review the implementation for <TASK-ID or change scope>.
+SESSION AUTHORIZATION
+Role: <REVIEW / REVIEW-AND-FIX / RE-REVIEW>
+Assigned execution level: <L0/L1/L2/L3>
+Maximum authorized level: <L0/L1/L2/L3>
+Review scope: <checkpoint commit or explicit changed files/components>
+Finding scope for RE-REVIEW: <RVW-### IDs or N/A>
 
-Read:
-- AGENTS.md
-- authoritative specification
-- docs/implementation-handoff.md if present
-- explicitly named changed files and review scope
-- relevant tests
-- verification output
+Read AGENTS.md, policies/CODE_REVIEW.md, the controlling specification, the explicit review scope, relevant tests, and verification output. Use fresh context for meaningful changes.
 
-Your job is to identify defects, regressions, architecture violations, missing tests, and unsupported assumptions. Do not automatically rewrite the implementation.
+REVIEW diagnoses only. REVIEW-AND-FIX may record, directly correct, verify, and close a localized, unambiguous, low-risk finding in this session. It must not use that mode for Blocker/Major, L3, architecture/interface/schema, security/safety, domain/provenance/timing, or uncertain-root-cause work.
 
-Classify each finding as:
-- Blocker
-- Major
-- Minor
-- Suggestion
+RE-REVIEW checks the selected findings and fix scope. For each finding:
+- pass → Status: FIXED with evidence;
+- fail/regression → Status: OPEN with evidence;
+- conflict with authoritative requirements → Status: NEEDS-REVIEW;
+- distinct new defect → allocate a new RVW-###.
 
-For every actionable finding, provide:
-- Finding ID (RVW-###)
-- Severity
-- Affected files/symbols
-- Observed problem
-- Why it matters
-- Required fix
-- Verification needed
+Do not delete or rewrite original findings. A clean review states that no Blocker/Major/Minor findings were found and lists residual verification limits.
 
-Persist actionable findings to docs/review-findings.md using this structure:
-
-## RVW-001 — Major
-Status: OPEN
-Task: <TASK-ID>
-Files:
-- ...
-
-Finding:
-...
-
-Required fix:
-...
-
-Verification:
-- ...
-
-When producing a standalone review report, use the next `NNNN_REVIEW_SCOPE.md` number recorded in docs/0000_DOCUMENT_INDEX.md. Do not rename docs/review-findings.md or derive its `RVW-###` IDs from the document number.
-
-Do not invent or silently change authoritative domain semantics. If correctness depends on missing or conflicting requirements, record that explicitly and route it for clarification/architecture review.
-
-A clean review should say that no Blocker/Major/Minor findings were found and list any residual verification limits.
+Optional standalone reports use the next NNNN_REVIEW_SCOPE.md number in docs/0000_DOCUMENT_INDEX.md; this sequence is independent of RVW-###.
 ```

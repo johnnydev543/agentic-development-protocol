@@ -1,6 +1,8 @@
 # Escalation Policy
 
-Escalation means stopping low-confidence trial-and-error and handing off a concise evidence package.
+Escalation means stopping unauthorized or low-confidence work and returning a concise evidence package.
+
+If the required task level exceeds `Maximum authorized level`, stop immediately before planning, architectural decomposition, design, or edits. Correctly detecting a higher level does not authorize the agent to perform it.
 
 ## L0 / L1
 
@@ -39,7 +41,7 @@ Stop at any level when:
 8. The agent is repeating a prior approach without new evidence.
 9. Tests pass but intended behavior is still reasonably doubtful.
 
-## Required Handoff
+## Required Escalation Package
 
 ```text
 ### ESCALATION REQUIRED
@@ -47,11 +49,11 @@ Stop at any level when:
 Current routing level:
 <L0 / L1 / L2 / L3 / unknown>
 
+Maximum authorized level:
+<L0 / L1 / L2 / L3>
+
 Recommended next level:
 <L1 / L2 / L3 / clarification / independent review>
-
-Suggested model:
-<optional model if selection is available>
 
 Reason:
 <why escalation is required>
@@ -81,4 +83,4 @@ Next question:
 <precise diagnosis, clarification, or decision needed>
 ```
 
-The handoff should let a fresh model continue without reconstructing failed attempts from scratch.
+The package should let a newly authorized session continue without reconstructing failed attempts from scratch.

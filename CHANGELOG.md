@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.5 — 2026-09-14
+
+- Removed named-model mappings and `MODEL_REGISTRY.md`; model selection now lives outside repository policy.
+- Redefined L0-L3 as task decision risk rather than model capability.
+- Added mandatory per-session Role, Assigned execution level, Maximum authorized level, and explicit scope.
+- Added a hard authorization boundary: classification above the maximum requires immediate escalation before planning, decomposition, design, or edits.
+- Replaced the mandatory HANDOFF lifecycle with IMPLEMENT → REVIEW → FIX → RE-REVIEW → VERIFY and an optional narrowly scoped L3 DECISION session.
+- Restored Git only as an optional reproducible review checkpoint, not a model handoff prerequisite.
+- Added `FIXED-PENDING-REVIEW`; only fresh RE-REVIEW may finalize `FIXED`.
+- Added optional PLAN and PLAN-REVIEW roles with `PLN-###` findings and a two-revision stop rule for structural plan rejection.
+- Allowed PLAN-REVIEW to amend and approve plans directly, and added REVIEW-AND-FIX for verified localized low-risk defects; independent re-review remains mandatory for defined high-risk categories.
+
 ## v0.2.1 — 2026-09-12
 
 - Restored self-contained phase prompts after the context-deduplication experiment caused unreliable tool-driven reading in some model integrations.

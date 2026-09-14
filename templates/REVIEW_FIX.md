@@ -1,33 +1,17 @@
-# Review Fix Prompt Template
-
-Use this when review findings were produced in another session or by another model.
+# Review Fix Session
 
 ```text
-Fix the OPEN findings assigned to this session in docs/review-findings.md.
+SESSION AUTHORIZATION
+Role: FIX
+Assigned execution level: <L0/L1/L2/L3>
+Maximum authorized level: <L0/L1/L2/L3>
+Finding scope: <RVW-### IDs>
 
-Before editing, read:
-- AGENTS.md
-- docs/review-findings.md
-- docs/implementation-handoff.md if present
-- the authoritative specification
-- the files/tests referenced by the selected findings
+Read AGENTS.md, the selected findings in docs/review-findings.md, the controlling specification, and referenced files/tests.
 
-For each finding:
-1. Confirm that the requested fix is consistent with the authoritative specification and architecture invariants.
-2. Make the smallest correct change that resolves the finding.
-3. Add or update a regression test when appropriate.
-4. Run the verification requested by the finding plus relevant lint/type checks.
-5. Do not broaden the fix into unrelated refactoring.
+If a required correction exceeds Maximum authorized level, do not plan, architecturally decompose, design, or edit. Output only ESCALATION_REQUIRED and stop.
 
-If a finding requires a new architecture, interface/schema decision, unsupported domain interpretation, or uncertain cross-module semantic change, do not guess. Leave the finding OPEN and report that it requires higher-level review/architecture work.
+Otherwise make the smallest correct fix, add regression coverage, and run every verification named by the finding plus relevant checks. Avoid unrelated refactoring.
 
-After a successful fix, update the original finding in docs/review-findings.md instead of deleting it:
-
-Status: FIXED
-Fix summary: <concise description>
-Verification: <commands/results>
-
-If the finding is not actually valid, do not silently close it. Mark it as NEEDS-REVIEW and explain the evidence.
-
-Do not mark a finding FIXED merely because code was changed. Verification must pass.
+After checks pass, normally set Status: FIXED-PENDING-REVIEW. Set FIXED directly only for a localized, unambiguous, low-risk fix that does not trigger mandatory RE-REVIEW. Record Fix summary and Verification result.
 ```

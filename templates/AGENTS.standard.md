@@ -1,125 +1,32 @@
-# AGENTS.md — Standard
+# Agent Rules
 
-## Core Principles
+## Authority
 
-- Inspect relevant existing code before editing.
-- Follow the authoritative specification and existing project conventions.
-- Prefer the smallest correct change over broad refactoring.
-- Add or update tests when behavior changes.
-- Run relevant tests and configured lint/type checks.
-- Do not silently reinterpret requirements.
-- Do not invent missing domain rules, mappings, timestamps, or values.
-- Use strong models for decisions; use lower-cost models for execution once the decision is explicit.
+Use authoritative specifications, project rules, existing architecture, and tests. Do not invent domain semantics or broaden scope.
 
-## Task Routing
+## Routing and Authorization
 
-Before substantial work, classify the task internally:
+L0-L3 classifies task decision risk, not model capability. Every session must declare:
 
-- L0 — fast/mechanical.
-- L1 — routine implementation.
-- L2 — complex engineering.
-- L3 — architecture/high uncertainty.
+- Role: PLAN, PLAN-REVIEW, IMPLEMENT, REVIEW, REVIEW-AND-FIX, FIX, RE-REVIEW, DECISION, or VERIFY.
+- Assigned execution level.
+- Maximum authorized level.
+- Explicit task/review scope.
 
-Do not force every task to start at L0/L1. Route directly to L3 when architecture or unsupported domain interpretation is already required.
+If any required work exceeds the maximum, stop before planning, architectural decomposition, design, file edits, or implementation. Output only `ESCALATION_REQUIRED` and the package from `policies/ESCALATION.md`. Detecting L3 does not authorize L3 work.
 
-If the solution is specified and only implementation remains, prefer L0-L2.
+Large multi-file implementation may remain L2 when architecture, interfaces, schemas, semantics, and acceptance criteria are settled. Architectural decomposition is L3; mechanical subdivision under settled boundaries is not.
 
-The agent must not claim that it switched models unless the environment actually did so.
+## Workflow
 
-## Development Phase
+Use `IMPLEMENT → REVIEW → FIX → RE-REVIEW → VERIFY`. There is no mandatory HANDOFF phase or handoff document. Use a narrowly scoped DECISION session for an unresolved L3 question.
 
-Also identify the current phase:
+Use optional PLAN → PLAN-REVIEW when implementation needs subdivision. L2 PLAN only divides settled work; task boundaries requiring architecture, interface/schema, or domain decisions are L3. Two failed structural revisions trigger escalation rather than another review loop.
 
-- SPEC FINAL
-- ARCHITECT
-- HANDOFF
-- IMPLEMENT
-- REVIEW
-- FIX
-- VERIFY
+Git checkpoints are recommended when they provide a reproducible review target, but they are not model handoffs or prerequisites. Do not overwrite unrelated changes to create one.
 
-Task level and phase are separate. A large IMPLEMENT task may still belong to L1/L2 if architecture is settled; a small FIX may require L3 if it changes architecture or semantics.
+## Failure and Review
 
-### Architecture pass
+After two materially different unsuccessful fixes for the same failure, stop. Persist stable `RVW-###` findings. REVIEW-AND-FIX may close verified localized low-risk findings. Blocker/Major, L3, architecture/schema, security/safety, domain/provenance/timing, and uncertain-root-cause fixes require fresh RE-REVIEW.
 
-When acting as architect, establish module boundaries, interfaces, schemas, dependency direction, shared infrastructure, high-risk core logic, and representative reference implementations.
-
-Do not continue into repetitive implementation merely to make the product feature-complete.
-
-Create/update `docs/implementation-handoff.md` with architecture completed, architecture invariants, remaining implementation tasks, and high-risk remaining work.
-
-### Delegated implementation
-
-When implementing from `docs/implementation-handoff.md`:
-
-- execute one selected task at a time;
-- follow existing architecture/reference patterns;
-- stay within scope;
-- add required tests;
-- stop instead of redesigning architecture when blocked;
-- mark the task DONE only after verification passes;
-- do not automatically begin the next task.
-
-## Escalation
-
-At L0/L1, after 2 materially different unsuccessful fixes for the same failure, STOP and recommend L2 (or L3 for architecture/domain uncertainty).
-
-At L2, after 2 materially different unsuccessful fixes, STOP and recommend L3 when deeper reasoning is required.
-
-At L3, do not recommend L3 again merely because the task is hard. Stop for missing authoritative semantics/data, conflicting requirements, or when independent review is needed.
-
-Never make a third speculative modification after the two-attempt threshold.
-
-### Escalation Output
-
-Include:
-
-- Current routing level.
-- Recommended next level.
-- Suggested model, if model selection exists.
-- Reason.
-- Current task.
-- Exact observed failure.
-- Materially different attempts and outcomes.
-- Evidence-supported suspected root cause.
-- Relevant files/tests.
-- Important constraints.
-- Precise next question.
-
-## Review Gate
-
-Ordinary changes: run the relevant unit/integration tests and configured lint/type checks.
-
-High-risk changes: prefer fresh-context independent review, ideally by a different model. The reviewer receives the task, specification, project rules, architecture/handoff constraints, explicitly named changed files/scope, and verification output.
-
-Review findings should be classified as Blocker, Major, Minor, or Suggestion and should use stable finding IDs such as `RVW-001`.
-
-Persist cross-session findings in `docs/review-findings.md` rather than relying on chat history.
-
-A reviewer must not silently redefine domain semantics.
-
-## Review Fix
-
-Do not assume the reviewer must perform the fix.
-
-Use a lower-cost model for a localized, explicit, pattern-following fix covered by existing architecture and tests.
-
-Escalate the fix to L3 when the finding exposes an architecture flaw, interface/schema decision, unsupported domain meaning, uncertain root cause, or high-risk cross-module semantic change.
-
-After fixing, update the original finding rather than deleting it:
-
-- `Status: FIXED`
-- concise fix summary
-- verification performed
-
-A finding is not FIXED merely because code changed; verification must pass.
-
-## Handoff Scope
-
-Git-based phase handoff is temporarily disabled. Name the selected task/finding, changed files or components, and verification results. Do not require a phase-specific commit or Git baseline before proceeding.
-
-## Efficiency
-
-Use strong models to resolve uncertainty and lower-cost models to execute known solutions.
-
-Do not escalate merely because a task is large. Escalate because uncertainty, risk, repeated failure, or domain judgment exceeds the current level.
+Run the tests, lint, type checks, and smoke checks appropriate to the scope and risk.

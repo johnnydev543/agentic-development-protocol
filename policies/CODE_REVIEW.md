@@ -37,7 +37,7 @@ The reviewer should receive:
 - Original task or task ID.
 - Authoritative specification.
 - Relevant project rules (`AGENTS.md`).
-- Architecture/handoff invariants if present.
+- Relevant recorded architecture or decision constraints, if present.
 - Explicitly named changed files and review scope.
 - Test/lint/type-check output.
 
@@ -82,20 +82,20 @@ Verification:
 After repair, keep the original finding and update it:
 
 ```text
-Status: FIXED
+Status: FIXED-PENDING-REVIEW
 Fix summary: ...
 Verification: ...
 ```
 
-If the implementer believes the finding is invalid, mark it `NEEDS-REVIEW` with evidence rather than silently deleting or closing it.
+A separate fixer normally uses `FIXED-PENDING-REVIEW`. A `REVIEW-AND-FIX` session may set `FIXED` after resolving a localized, unambiguous, low-risk finding and passing verification. If the finding is invalid, use `NEEDS-REVIEW` with evidence.
 
 ## Who Should Fix Review Findings?
 
 Do not automatically use the review model to implement its findings.
 
-Prefer a lower-cost implementation model when the finding is localized, explicit, pattern-following, supported by existing architecture/semantics, and testable without a new design decision.
+Use an L0-L2-authorized FIX session when the finding is localized, explicit, pattern-following, supported by existing architecture/semantics, and testable without a new design decision.
 
-Route the fix to a strong model when the finding exposes:
+Require an L3-authorized FIX or DECISION session when the finding exposes:
 
 - an architecture flaw;
 - an interface or schema decision that must change;
@@ -103,13 +103,13 @@ Route the fix to a strong model when the finding exposes:
 - uncertain cross-module root cause;
 - another high-risk decision not settled by the specification.
 
-This preserves strong-model capacity for decisions rather than deterministic repair work.
+The session authorization, not the selected model's name, controls whether that work may proceed.
 
 ## Fix Completion
 
 A finding is not resolved merely because code changed.
 
-Mark it `FIXED` only after the requested verification passes. For Blocker/Major findings or changes that materially alter architecture/domain behavior, perform re-review when appropriate.
+Fresh RE-REVIEW is mandatory for Blocker/Major findings, L3 work, architecture/interface/schema changes, security or safety-critical behavior, domain/provenance/timing semantics, uncertain root cause, or an explicit reviewer request. Verified localized low-risk fixes may be closed in REVIEW-AND-FIX without creating an endless reviewer chain.
 
 ## Cross-Model Review
 

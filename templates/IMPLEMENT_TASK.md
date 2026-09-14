@@ -1,32 +1,17 @@
-# Delegated Implementation Prompt Template
-
-Use this with a lower-cost coding model after the architecture pass has produced explicit handoff tasks.
+# Implementation Session
 
 ```text
-Execute <TASK-ID> from docs/implementation-handoff.md.
+SESSION AUTHORIZATION
+Role: IMPLEMENT
+Assigned execution level: <L0/L1/L2/L3>
+Maximum authorized level: <L0/L1/L2/L3>
+Task scope: <explicit files/components and acceptance criteria>
 
-Before editing, read:
-- AGENTS.md
-- docs/implementation-handoff.md
-- the selected task
-- the files/tests directly referenced by that task
+Read AGENTS.md, the controlling specification, and files/tests directly required by this scope.
 
-Scope is limited to <TASK-ID>.
+Classify required work before editing. A large multi-file implementation remains L2 when all architecture, interfaces, schemas, semantics, and acceptance criteria are settled.
 
-Requirements:
-1. Follow the existing architecture, interfaces, schemas, dependency direction, and reference implementation patterns.
-2. Implement only the selected task.
-3. Add or update the tests required by the task.
-4. Run the relevant tests plus configured lint/type checks for the affected scope.
-5. Do not modify unrelated files or refactor unrelated code.
-6. Do not redesign module boundaries, public interfaces, schemas, or dependency direction unless the task explicitly authorizes it.
-7. If completion requires an architectural or domain-semantic change, STOP and report the blocker instead of silently redesigning the system.
+If any required work exceeds Maximum authorized level, do not plan, decompose, design, edit, or implement it. Output only ESCALATION_REQUIRED with the policy package and stop.
 
-When complete, update docs/implementation-handoff.md:
-- set <TASK-ID> to DONE only if verification passes;
-- record changed files;
-- record verification commands/results;
-- add any concrete follow-up task discovered during implementation.
-
-Do not automatically start another task.
+Otherwise implement only the named scope, add required tests, run relevant verification, and report changed files and results. When practical, create an implementation checkpoint commit after checks pass so REVIEW has a frozen target. The checkpoint is not a handoff prerequisite.
 ```
