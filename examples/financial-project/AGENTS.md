@@ -50,6 +50,6 @@ Provide the standard escalation package from `policies/ESCALATION.md`.
 
 Independent review is strongly preferred for financial calculations, extraction semantics, consensus/revision logic, normalization, ticker/company mapping, market classification, timestamp/information-cutoff logic, provenance, backtesting, and database changes affecting historical financial data.
 
-Verification is part of REVIEW and RE-REVIEW rather than a separate role. IMPLEMENT and FIX submit affected-scope evidence; the reviewer independently reruns or extends risk-relevant checks. Review authorization may reach L3.
+Verification is part of REVIEW rather than a separate role. IMPLEMENT submits affected-scope evidence for initial work and finding corrections; the reviewer independently reruns or extends risk-relevant checks. REVIEW handles both initial and finding review and may be authorized to L3. REVIEW-AND-FIX may review and correct to L3 but cannot finally approve its own L3 correction.
 
 The reviewer must not silently rewrite financial meaning. Any semantic change must be supported by the authoritative specification/source or escalated for clarification.

@@ -1,20 +1,26 @@
-# Independent Review and Re-review Session
+# Independent Review Session
 
 ```text
 SESSION AUTHORIZATION
-Role: <REVIEW / REVIEW-AND-FIX / RE-REVIEW>
-Assigned execution level: <L0/L1/L2/L3>
+Role: <REVIEW / REVIEW-AND-FIX>
 Maximum authorized level: <L0/L1/L2/L3>
-Review scope: <checkpoint commit or explicit changed files/components>
-Finding scope for RE-REVIEW: <RVW-### IDs or N/A>
+Task: <optional natural-language scope>
 
-Read AGENTS.md, policies/CODE_REVIEW.md, the controlling specification, the explicit review scope, relevant tests, and verification output. Use fresh context for meaningful changes.
+Keep the selected role for the entire session. Read AGENTS.md, policies/CODE_REVIEW.md, the controlling specification, current changes, checkpoint/branch state, docs/review-findings.md, relevant tests, and submitted verification. Use fresh context for meaningful changes.
 
-Verification is part of this review. Inspect the implementer or fixer's recorded evidence, independently rerun the risk-relevant targeted checks, and add adversarial, regression, or domain-semantic cases when coverage is insufficient. A full-suite rerun is required only when the risk, affected surface, missing evidence, or low execution cost justifies it. Review authorization may reach L3.
+Infer and report:
+- Required review level.
+- Effective review scope.
+- Review type: INITIAL REVIEW or FINDING REVIEW.
+- Findings in scope, if any.
 
-REVIEW diagnoses only. REVIEW-AND-FIX may record, directly correct, verify, and close a localized, unambiguous, low-risk finding in this session. It must not use that mode for Blocker/Major, L3, architecture/interface/schema, security/safety, domain/provenance/timing, or uncertain-root-cause work.
+When Task omits scope, prefer relevant FIXED-PENDING-REVIEW findings and their correction diff; otherwise review the current working tree or current branch/checkpoint change. Ask only when multiple unrelated change groups or an unsafe base ambiguity prevents reliable inference.
 
-RE-REVIEW checks the selected findings and fix scope. For each finding:
+Verification is part of this review. Inspect the implementing session's recorded evidence, independently rerun the risk-relevant targeted checks, and add adversarial, regression, or domain-semantic cases when coverage is insufficient. A full-suite rerun is required only when the risk, affected surface, missing evidence, or low execution cost justifies it. Review authorization may reach L3.
+
+REVIEW diagnoses only. REVIEW-AND-FIX may review and correct up to L3 when authorized. It may self-close only localized, unambiguous L0-L2 findings. Set an L3 correction to FIXED-PENDING-REVIEW for a fresh REVIEW session. Leave an unresolved L3 decision OPEN for a separate DECISION session.
+
+For a FINDING REVIEW:
 - pass → Status: FIXED with evidence;
 - fail/regression → Status: OPEN with evidence;
 - conflict with authoritative requirements → Status: NEEDS-REVIEW;

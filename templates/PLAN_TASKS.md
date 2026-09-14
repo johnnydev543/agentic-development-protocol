@@ -2,7 +2,6 @@
 
 ```text
 Role: <PLAN / PLAN-REVIEW>
-Assigned execution level: <L2/L3>
 Maximum authorized level: <L2/L3>
 Planning scope: <specification or feature>
 

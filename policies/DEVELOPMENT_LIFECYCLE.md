@@ -5,7 +5,7 @@ Use this workflow after the controlling specification is sufficiently settled:
 ```text
 [optional PLAN → PLAN-REVIEW]
                  ↓
-IMPLEMENT → implementation checkpoint → REVIEW → FIX → fix checkpoint → RE-REVIEW → COMPLETE
+IMPLEMENT → implementation checkpoint → REVIEW → IMPLEMENT finding corrections → REVIEW → COMPLETE
 ```
 
 There is no mandatory HANDOFF phase or implementation-handoff document. A separate DECISION session is used only when an unresolved L3 question blocks implementation.
@@ -23,30 +23,29 @@ PLAN-REVIEW evaluates the plan rather than production code. When authority is su
 
 ## 1. IMPLEMENT
 
-The session must include the authorization header from `templates/SESSION_AUTHORIZATION.md` and an explicit scope. L0-L2 covers even large or multi-file work when architecture, interfaces, schemas, domain semantics, and acceptance criteria are already settled.
+The session must include the authorization header from `templates/SESSION_AUTHORIZATION.md`. Its role remains fixed. L0-L2 covers even large or multi-file work when architecture, interfaces, schemas, domain semantics, and acceptance criteria are already settled.
 
 If required work exceeds the session maximum, stop before planning, decomposition, design, or edits and emit the escalation package. Do not turn an unresolved L3 decision into apparently routine subtasks.
 
-Complete only the named scope, add the required tests, and record verification. When practical, create an implementation checkpoint commit after checks pass. The commit freezes the review target; it is not a model-handoff requirement.
+IMPLEMENT handles both initial task work and correction of review findings. Infer which applies from the request and repository state, report the inferred scope, complete only that scope, add the required tests, and record verification. Finding correction uses relevant `OPEN` entries and normally changes them to `FIXED-PENDING-REVIEW`. When practical, create a checkpoint commit after checks pass. The commit freezes the review target; it is not a model-handoff requirement.
 
 ## 2. REVIEW
 
-Use a fresh session for meaningful changes. Provide the controlling specification, project rules, explicit change scope, implementation checkpoint when available, and the implementer's verification output. REVIEW may be authorized up to L3 according to the risk of the change.
+Use a fresh session for meaningful changes. REVIEW handles both initial implementation review and review of corrected findings. Infer the mode and scope from relevant `FIXED-PENDING-REVIEW` findings, the current diff, checkpoint/branch state, and user request; report the inferred scope before proceeding. REVIEW may be authorized up to L3 according to risk.
 
-The reviewer records actionable findings with stable `RVW-###` IDs. REVIEW is diagnosis-only, but verification is part of that diagnosis: inspect the implementer's evidence, independently rerun risk-relevant targeted checks, and add adversarial or regression cases when needed. Do not rerun the full suite merely to duplicate evidence unless risk, coverage, or execution cost justifies it. REVIEW-AND-FIX may directly resolve a localized, unambiguous, low-risk defect within its authorization, run verification, and set it `FIXED` in the same session. A checkpoint commit makes the reviewed snapshot reproducible, but review may use an explicitly named working-tree scope.
+The reviewer records actionable findings with stable `RVW-###` IDs. REVIEW is diagnosis-only, but verification is part of that diagnosis: inspect submitted evidence, independently rerun risk-relevant targeted checks, and add adversarial or regression cases when needed. For corrected findings, set `FIXED`, `OPEN`, or `NEEDS-REVIEW`; allocate a new ID for a distinct defect. Do not rerun the full suite merely to duplicate evidence unless risk, coverage, or execution cost justifies it.
 
-## 3. FIX
+## 3. REVIEW-AND-FIX
 
-Authorize a FIX session for specific `RVW-###` entries.
+REVIEW-AND-FIX is a fixed composite role rather than a mid-session switch. It may review and correct up to L3 within session authorization. Its final self-approval is limited to L0-L2 findings that are localized, unambiguous, supported by settled decisions, and safe to verify in the same session.
 
-- Explicit, localized, pattern-following correction under settled decisions: L0-L2.
-- Architecture, interface/schema, domain/provenance/timing decision, or uncertain root cause: L3.
+- L0-L2 direct correction: record the finding, correct it, verify it, and set `FIXED` when no independent-review rule applies.
+- L3 correction whose answer is authoritative: correct and verify it, but leave it `FIXED-PENDING-REVIEW`; the same session cannot finally approve it.
+- Unresolved L3 architecture, interface/schema, domain/provenance/timing, or uncertain-root-cause decision: diagnose it and leave it `OPEN` for a separate DECISION session.
 
-After checks pass, a separate FIX session normally sets `FIXED-PENDING-REVIEW`. It may set `FIXED` directly only when the finding is localized, unambiguous, low risk, and independent re-review is not required by the rules below.
+## 4. Review of Finding Corrections
 
-## 4. RE-REVIEW
-
-Fresh RE-REVIEW is required for Blocker/Major findings, L3 work, architecture/interface/schema changes, security or safety-critical behavior, domain/provenance/timing semantics, uncertain root cause, or when explicitly requested. It is optional for verified localized low-risk fixes. RE-REVIEW includes independent, risk-based verification and may be authorized up to L3.
+There is no separate RE-REVIEW role. Start a fresh REVIEW session after IMPLEMENT corrects findings. Fresh independent REVIEW is required for Blocker/Major findings, L3 work, architecture/interface/schema changes, security or safety-critical behavior, domain/provenance/timing semantics, uncertain root cause, or when explicitly requested. It is optional for verified localized low-risk corrections closed by REVIEW-AND-FIX.
 
 For each finding:
 
@@ -59,7 +58,7 @@ Do not rewrite or delete the original finding.
 
 ## Verification Inside Review
 
-IMPLEMENT and FIX run their affected-scope checks before submitting work and record the results. REVIEW, REVIEW-AND-FIX, and RE-REVIEW independently assess that evidence and rerun or extend the checks needed for the reviewed risk. Record commands, results, uncovered limits, and any semantic or provenance uncertainty with the review. Passing commands do not override unresolved correctness doubt.
+IMPLEMENT runs affected-scope checks before submitting initial work or finding corrections. REVIEW and REVIEW-AND-FIX independently assess that evidence and rerun or extend the checks needed for the reviewed risk. Record commands, results, uncovered limits, and any semantic or provenance uncertainty with the review. Passing commands do not override unresolved correctness doubt.
 
 ## Optional L3 DECISION Session
 
@@ -70,7 +69,7 @@ When implementation discovers an unauthorized L3 question, open a separate sessi
 - required implementation behavior;
 - acceptance criteria.
 
-It should not broaden into unrelated implementation. After the decision is authoritative, return to a newly authorized IMPLEMENT or FIX session.
+It should not broaden into unrelated implementation. After the decision is authoritative, return to a newly authorized IMPLEMENT session.
 
 ## Checkpoint Rule
 

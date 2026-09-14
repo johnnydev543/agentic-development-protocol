@@ -5,12 +5,13 @@ Copy this header into every working session.
 ```text
 SESSION AUTHORIZATION
 
-Role: <PLAN / PLAN-REVIEW / IMPLEMENT / REVIEW / REVIEW-AND-FIX / FIX / RE-REVIEW / DECISION>
-Assigned execution level: <L0 / L1 / L2 / L3>
+Role: <PLAN / PLAN-REVIEW / IMPLEMENT / REVIEW / REVIEW-AND-FIX / DECISION>
 Maximum authorized level: <L0 / L1 / L2 / L3>
-Task or review scope: <explicit task, finding IDs, files, or components>
+Task: <optional natural-language scope>
 
 You may classify the required work at any L0-L3 level. Classification does not grant execution authority.
+
+Keep this role for the entire session. Infer the required task level and effective scope from the request, current changes, branch/checkpoint state, and review ledger. State them before acting. Ask for scope only when multiple unrelated targets or an unsafe ambiguity prevents reliable inference.
 
 If any required work exceeds Maximum authorized level:
 - do not plan or architecturally decompose it;

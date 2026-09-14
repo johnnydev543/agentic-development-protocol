@@ -6,6 +6,6 @@ Treat architecture, public interfaces/schemas, provenance, identity, timestamps/
 
 Missing evidence fails closed. Never infer values or semantics merely to continue. Preserve raw inputs, provenance, immutable history, information cutoffs, and deterministic calculations where applicable.
 
-High-risk IMPLEMENT and every Blocker/Major FIX require fresh independent REVIEW or RE-REVIEW. The fixer sets `FIXED-PENDING-REVIEW`; only the independent re-reviewer may set `FIXED`.
+High-risk initial IMPLEMENT and every Blocker/Major finding correction require fresh independent REVIEW. The implementing session sets `FIXED-PENDING-REVIEW`; only the fresh reviewing session may set `FIXED`.
 
 Session authorization remains mandatory. A model's name, tier, provider, or self-assessment never grants permission above Maximum authorized level.

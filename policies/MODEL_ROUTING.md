@@ -20,13 +20,14 @@ Repository size and file count do not by themselves make work L3. A large settle
 Every working session must state:
 
 ```text
-Role: <PLAN / PLAN-REVIEW / IMPLEMENT / REVIEW / REVIEW-AND-FIX / FIX / RE-REVIEW / DECISION>
-Assigned execution level: <L0 / L1 / L2 / L3>
+Role: <PLAN / PLAN-REVIEW / IMPLEMENT / REVIEW / REVIEW-AND-FIX / DECISION>
 Maximum authorized level: <L0 / L1 / L2 / L3>
-Task or review scope: <explicit scope>
+Task: <optional natural-language scope; infer from repository state when omitted>
 ```
 
-The maximum authorized level is an execution boundary, not an estimate of model intelligence.
+The role is fixed for the whole session. A new phase requires a new session; an IMPLEMENT session never turns itself into REVIEW. The maximum authorized level is an execution boundary, not an estimate of model intelligence. The agent infers and reports the required task level after inspecting the task and repository.
+
+Model capability is a separate user selection. A highly capable model may perform L0 work, though it may cost more than necessary. Granting a weaker model L3 authority does not make it suitable for L3 decisions.
 
 An agent may classify work above its maximum. Detection does not grant permission to perform it. If any required work exceeds the maximum authorized level, the agent must:
 
@@ -43,11 +44,19 @@ Mechanical subdivision is allowed below L3 only when boundaries, interfaces, sch
 
 - **PLAN:** L2 when mechanically subdividing settled work; L3 when task boundaries require architecture, interface/schema, or domain decisions.
 - **PLAN-REVIEW:** verify each task and directly amend the plan to an approvable form when authority is sufficient. Plan edits do not require another independent review.
-- **IMPLEMENT:** normally L0-L2. L3 implementation is allowed only when the session explicitly has L3 authority.
+- **IMPLEMENT:** handles both initial task work and correction of `RVW-###` findings. Normally L0-L2; L3 only with explicit authorization.
 - **REVIEW:** authorize up to L3 according to change risk. Review includes independent, risk-based verification.
-- **REVIEW-AND-FIX:** allowed for localized, unambiguous, low-risk corrections within the session maximum. Record the finding, fix it, run verification, and close it in one session.
-- **FIX:** L0-L2 for an explicit localized correction; L3 for architecture, semantics, or uncertain root cause.
-- **RE-REVIEW:** independently review and verify the selected findings and fix scope; authorization may reach L3.
+- **REVIEW-AND-FIX:** may review and correct up to L3 within session authorization. It may self-close only eligible localized L0-L2 findings. An L3 correction remains `FIXED-PENDING-REVIEW` for fresh REVIEW; an unresolved L3 decision routes to DECISION before correction.
 - **DECISION:** resolve only the named L3 question and produce constraints plus acceptance criteria. Do not broaden into unrelated implementation.
 
 Specialization may influence which model the user selects, but selection is external to this policy. Current model preferences belong in user/session configuration, not the repository.
+
+## Scope Inference
+
+Users should not have to copy commit hashes or finding IDs during a normal linear workflow. When `Task` is omitted, infer scope and state it before work:
+
+- IMPLEMENT: use relevant `OPEN` findings when present; otherwise use the user request and current task state.
+- REVIEW: use relevant `FIXED-PENDING-REVIEW` findings and their correction diff when present; otherwise review current working-tree changes, or the current branch/checkpoint change when the tree is clean.
+- REVIEW-AND-FIX: infer the same scope as REVIEW.
+
+Ask for scope only when multiple unrelated change groups exist, the base cannot be determined safely, findings cannot be matched to changes, or inference would materially broaden the task.

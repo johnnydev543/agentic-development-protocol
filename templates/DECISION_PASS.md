@@ -3,7 +3,6 @@
 ```text
 SESSION AUTHORIZATION
 Role: DECISION
-Assigned execution level: L3
 Maximum authorized level: L3
 Decision scope: <one explicit architecture/interface/schema/domain question>
 

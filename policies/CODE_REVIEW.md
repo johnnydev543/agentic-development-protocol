@@ -32,7 +32,7 @@ Prefer a fresh-context reviewer different from the implementation model when pra
 
 ## Verification Is Part of Review
 
-IMPLEMENT and FIX must run and record the affected-scope checks before submission. The reviewer then validates that evidence independently: rerun the checks most relevant to the change's risk and add missing adversarial, regression, or domain-semantic cases. Do not automatically duplicate every successful command or the full suite when targeted evidence is sufficient. Escalate verification depth with risk; a REVIEW or RE-REVIEW session may be authorized up to L3.
+IMPLEMENT must run and record affected-scope checks for both initial work and finding corrections. REVIEW then validates that evidence independently: rerun the checks most relevant to the change's risk and add missing adversarial, regression, or domain-semantic cases. Do not automatically duplicate every successful command or the full suite when targeted evidence is sufficient. Escalate verification depth with risk; REVIEW may be authorized up to L3.
 
 Report both the diagnostic outcome (`CLEAN` or `FINDINGS`) and verification outcome (`PASS`, `FAIL`, or `BLOCKED`). Passing automation does not override unresolved semantic, provenance, timing, security, or correctness doubt.
 
@@ -93,15 +93,17 @@ Fix summary: ...
 Verification: ...
 ```
 
-A separate fixer normally uses `FIXED-PENDING-REVIEW`. A `REVIEW-AND-FIX` session may set `FIXED` after resolving a localized, unambiguous, low-risk finding and passing verification. If the finding is invalid, use `NEEDS-REVIEW` with evidence.
+A separate IMPLEMENT session correcting findings normally uses `FIXED-PENDING-REVIEW`. A `REVIEW-AND-FIX` session may set `FIXED` after resolving an L0-L2 localized, unambiguous finding and passing verification when no independent-review rule applies. If the finding is invalid, use `NEEDS-REVIEW` with evidence.
+
+An L3-authorized REVIEW-AND-FIX session may also correct an L3 finding when the required decision is already authoritative. It must leave that finding `FIXED-PENDING-REVIEW` for a fresh REVIEW session. If the decision is unresolved, leave the finding `OPEN` and route it to DECISION instead of inventing an answer.
 
 ## Who Should Fix Review Findings?
 
 Do not automatically use the review model to implement its findings.
 
-Use an L0-L2-authorized FIX session when the finding is localized, explicit, pattern-following, supported by existing architecture/semantics, and testable without a new design decision.
+Use an L0-L2-authorized IMPLEMENT session when the finding is localized, explicit, pattern-following, supported by existing architecture/semantics, and testable without a new design decision.
 
-Require an L3-authorized FIX or DECISION session when the finding exposes:
+Require an L3-authorized IMPLEMENT or DECISION session when the finding exposes:
 
 - an architecture flaw;
 - an interface or schema decision that must change;
@@ -115,7 +117,7 @@ The session authorization, not the selected model's name, controls whether that 
 
 A finding is not resolved merely because code changed.
 
-Fresh RE-REVIEW is mandatory for Blocker/Major findings, L3 work, architecture/interface/schema changes, security or safety-critical behavior, domain/provenance/timing semantics, uncertain root cause, or an explicit reviewer request. Verified localized low-risk fixes may be closed in REVIEW-AND-FIX without creating an endless reviewer chain.
+Fresh REVIEW is mandatory after correction of Blocker/Major findings, L3 work, architecture/interface/schema changes, security or safety-critical behavior, domain/provenance/timing semantics, uncertain root cause, or an explicit reviewer request. There is no separate RE-REVIEW role. Verified localized low-risk corrections may be closed in REVIEW-AND-FIX without creating an endless reviewer chain.
 
 ## Cross-Model Review
 
