@@ -28,6 +28,31 @@ If required work exceeds the maximum, recognizing the higher level does not auth
 
 Complexity and risk are different. A large settled implementation can be L2; a small semantic change can be L3.
 
+## Roles
+
+| Role | Responsibility | Typical authorization |
+|---|---|---|
+| `PLAN` | Subdivide complex requirements into independently executable tasks without writing production code | L2 under settled boundaries; L3 when task boundaries require new decisions |
+| `PLAN-REVIEW` | Review and, when authorized, directly amend a plan; return `PLAN_APPROVED` or blocking `PLN-###` findings | Usually L3 for plans involving architecture or domain risk |
+| `DECISION` | Resolve one explicit architecture, interface/schema, domain-semantic, provenance, timing, or other high-impact question | L3 |
+| `IMPLEMENT` | Implement an explicit scope under authoritative specifications and settled decisions | Normally L0-L2; L3 only with explicit authorization |
+| `REVIEW` | Diagnose defects and record stable `RVW-###` findings without modifying production code | Match the reviewed change's risk |
+| `REVIEW-AND-FIX` | Review, directly correct, verify, and close localized, unambiguous, low-risk defects in one session | Normally L0-L2 |
+| `FIX` | Correct only the selected `RVW-###` findings without reopening the entire review scope | L0-L2 for explicit fixes; L3 for decision-heavy or uncertain fixes |
+| `RE-REVIEW` | Independently validate selected fixes and set `FIXED`, `OPEN`, or `NEEDS-REVIEW` | Match the original finding's risk |
+| `VERIFY` | Run and record required tests, lint, type checks, builds, regression checks, and domain-specific verification | Normally L0-L2; L3 when correctness itself requires semantic judgment |
+
+Every session must explicitly provide:
+
+```text
+Role
+Assigned execution level
+Maximum authorized level
+Task or review scope
+```
+
+These fields are authorization, not a claim about the selected model's inherent capability.
+
 ## Development Workflow
 
 ```text
@@ -49,6 +74,28 @@ There is no mandatory HANDOFF phase or `docs/implementation-handoff.md`. If impl
 When a complex implementation must first be split, use PLAN rather than IMPLEMENT. PLAN is L2 if it only subdivides settled work, and L3 if task boundaries require architecture/interface/schema/domain decisions. A PLAN-REVIEW session either approves it or records `PLN-###` findings; after two failed structural revisions, escalate instead of looping.
 
 Git commits are optional reproducible review checkpoints, not model handoffs. A reviewer may receive a checkpoint commit or an explicitly named working-tree scope. Agents must not require phase-specific commits before proceeding or overwrite unrelated changes to manufacture a clean tree.
+
+### Fast path
+
+Use this only for localized, unambiguous, low-risk findings:
+
+```text
+IMPLEMENT → REVIEW-AND-FIX → VERIFY
+```
+
+### L3 decision path
+
+When any role detects unauthorized L3 work:
+
+```text
+current role
+    ↓ ESCALATION_REQUIRED
+DECISION
+    ↓ authoritative decision and acceptance criteria
+return to PLAN, IMPLEMENT, or FIX
+```
+
+The detecting agent must not perform the L3 decision merely because it classified the task correctly.
 
 ## Review Records
 
