@@ -30,6 +30,12 @@ Independent review is required or strongly preferred for high-risk changes, incl
 
 Prefer a fresh-context reviewer different from the implementation model when practical.
 
+## Verification Is Part of Review
+
+IMPLEMENT and FIX must run and record the affected-scope checks before submission. The reviewer then validates that evidence independently: rerun the checks most relevant to the change's risk and add missing adversarial, regression, or domain-semantic cases. Do not automatically duplicate every successful command or the full suite when targeted evidence is sufficient. Escalate verification depth with risk; a REVIEW or RE-REVIEW session may be authorized up to L3.
+
+Report both the diagnostic outcome (`CLEAN` or `FINDINGS`) and verification outcome (`PASS`, `FAIL`, or `BLOCKED`). Passing automation does not override unresolved semantic, provenance, timing, security, or correctness doubt.
+
 ## Reviewer Input
 
 The reviewer should receive:

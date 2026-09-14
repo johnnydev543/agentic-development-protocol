@@ -5,7 +5,7 @@ Copy this header into every working session.
 ```text
 SESSION AUTHORIZATION
 
-Role: <PLAN / PLAN-REVIEW / IMPLEMENT / REVIEW / REVIEW-AND-FIX / FIX / RE-REVIEW / DECISION / VERIFY>
+Role: <PLAN / PLAN-REVIEW / IMPLEMENT / REVIEW / REVIEW-AND-FIX / FIX / RE-REVIEW / DECISION>
 Assigned execution level: <L0 / L1 / L2 / L3>
 Maximum authorized level: <L0 / L1 / L2 / L3>
 Task or review scope: <explicit task, finding IDs, files, or components>

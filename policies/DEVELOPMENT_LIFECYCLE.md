@@ -5,7 +5,7 @@ Use this workflow after the controlling specification is sufficiently settled:
 ```text
 [optional PLAN → PLAN-REVIEW]
                  ↓
-IMPLEMENT → implementation checkpoint → REVIEW → FIX → fix checkpoint → RE-REVIEW → VERIFY
+IMPLEMENT → implementation checkpoint → REVIEW → FIX → fix checkpoint → RE-REVIEW → COMPLETE
 ```
 
 There is no mandatory HANDOFF phase or implementation-handoff document. A separate DECISION session is used only when an unresolved L3 question blocks implementation.
@@ -31,9 +31,9 @@ Complete only the named scope, add the required tests, and record verification. 
 
 ## 2. REVIEW
 
-Use a fresh session for meaningful changes. Provide the controlling specification, project rules, explicit change scope, implementation checkpoint when available, and verification output.
+Use a fresh session for meaningful changes. Provide the controlling specification, project rules, explicit change scope, implementation checkpoint when available, and the implementer's verification output. REVIEW may be authorized up to L3 according to the risk of the change.
 
-The reviewer records actionable findings with stable `RVW-###` IDs. REVIEW is diagnosis-only. REVIEW-AND-FIX may directly resolve a localized, unambiguous, low-risk defect within its authorization, run verification, and set it `FIXED` in the same session. A checkpoint commit makes the reviewed snapshot reproducible, but review may use an explicitly named working-tree scope.
+The reviewer records actionable findings with stable `RVW-###` IDs. REVIEW is diagnosis-only, but verification is part of that diagnosis: inspect the implementer's evidence, independently rerun risk-relevant targeted checks, and add adversarial or regression cases when needed. Do not rerun the full suite merely to duplicate evidence unless risk, coverage, or execution cost justifies it. REVIEW-AND-FIX may directly resolve a localized, unambiguous, low-risk defect within its authorization, run verification, and set it `FIXED` in the same session. A checkpoint commit makes the reviewed snapshot reproducible, but review may use an explicitly named working-tree scope.
 
 ## 3. FIX
 
@@ -46,7 +46,7 @@ After checks pass, a separate FIX session normally sets `FIXED-PENDING-REVIEW`. 
 
 ## 4. RE-REVIEW
 
-Fresh RE-REVIEW is required for Blocker/Major findings, L3 work, architecture/interface/schema changes, security or safety-critical behavior, domain/provenance/timing semantics, uncertain root cause, or when explicitly requested. It is optional for verified localized low-risk fixes.
+Fresh RE-REVIEW is required for Blocker/Major findings, L3 work, architecture/interface/schema changes, security or safety-critical behavior, domain/provenance/timing semantics, uncertain root cause, or when explicitly requested. It is optional for verified localized low-risk fixes. RE-REVIEW includes independent, risk-based verification and may be authorized up to L3.
 
 For each finding:
 
@@ -57,9 +57,9 @@ For each finding:
 
 Do not rewrite or delete the original finding.
 
-## 5. VERIFY
+## Verification Inside Review
 
-Run the risk-relevant tests, lint, type checks, build/import/startup checks, and regression checks. Verification evidence belongs with the task/finding. Passing commands do not override unresolved semantic or provenance doubt.
+IMPLEMENT and FIX run their affected-scope checks before submitting work and record the results. REVIEW, REVIEW-AND-FIX, and RE-REVIEW independently assess that evidence and rerun or extend the checks needed for the reviewed risk. Record commands, results, uncovered limits, and any semantic or provenance uncertainty with the review. Passing commands do not override unresolved correctness doubt.
 
 ## Optional L3 DECISION Session
 

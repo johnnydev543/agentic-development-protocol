@@ -36,11 +36,10 @@ Complexity and risk are different. A large settled implementation can be L2; a s
 | `PLAN-REVIEW` | Review and, when authorized, directly amend a plan; return `PLAN_APPROVED` or blocking `PLN-###` findings | Usually L3 for plans involving architecture or domain risk |
 | `DECISION` | Resolve one explicit architecture, interface/schema, domain-semantic, provenance, timing, or other high-impact question | L3 |
 | `IMPLEMENT` | Implement an explicit scope under authoritative specifications and settled decisions | Normally L0-L2; L3 only with explicit authorization |
-| `REVIEW` | Diagnose defects and record stable `RVW-###` findings without modifying production code | Match the reviewed change's risk |
+| `REVIEW` | Diagnose defects and independently perform risk-based verification; record stable `RVW-###` findings without modifying production code | Up to L3, matching the reviewed change's risk |
 | `REVIEW-AND-FIX` | Review, directly correct, verify, and close localized, unambiguous, low-risk defects in one session | Normally L0-L2 |
 | `FIX` | Correct only the selected `RVW-###` findings without reopening the entire review scope | L0-L2 for explicit fixes; L3 for decision-heavy or uncertain fixes |
-| `RE-REVIEW` | Independently validate selected fixes and set `FIXED`, `OPEN`, or `NEEDS-REVIEW` | Match the original finding's risk |
-| `VERIFY` | Run and record required tests, lint, type checks, builds, regression checks, and domain-specific verification | Normally L0-L2; L3 when correctness itself requires semantic judgment |
+| `RE-REVIEW` | Independently review and verify selected fixes, then set `FIXED`, `OPEN`, or `NEEDS-REVIEW` | Up to L3, matching the original finding's risk |
 
 Every session must explicitly provide:
 
@@ -66,7 +65,7 @@ FIX
    ↓ fix checkpoint / FIXED-PENDING-REVIEW
 RE-REVIEW
    ↓ FIXED, OPEN, or NEEDS-REVIEW
-VERIFY
+COMPLETE
 ```
 
 There is no mandatory HANDOFF phase or `docs/implementation-handoff.md`. If implementation encounters an unresolved L3 question, use a narrowly scoped DECISION session, then return to IMPLEMENT or FIX.
@@ -75,12 +74,14 @@ When a complex implementation must first be split, use PLAN rather than IMPLEMEN
 
 Git commits are optional reproducible review checkpoints, not model handoffs. A reviewer may receive a checkpoint commit or an explicitly named working-tree scope. Agents must not require phase-specific commits before proceeding or overwrite unrelated changes to manufacture a clean tree.
 
+Verification is not a separate final role. IMPLEMENT and FIX submit their own affected-scope verification evidence. REVIEW, REVIEW-AND-FIX, and RE-REVIEW independently inspect that evidence and rerun or extend the checks required by risk. They need not rerun the full suite when targeted evidence is sufficient.
+
 ### Fast path
 
 Use this only for localized, unambiguous, low-risk findings:
 
 ```text
-IMPLEMENT → REVIEW-AND-FIX → VERIFY
+IMPLEMENT → REVIEW-AND-FIX → COMPLETE
 ```
 
 ### L3 decision path

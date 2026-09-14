@@ -8,7 +8,7 @@ Use authoritative specifications, project rules, existing architecture, and test
 
 L0-L3 classifies task decision risk, not model capability. Every session must declare:
 
-- Role: PLAN, PLAN-REVIEW, IMPLEMENT, REVIEW, REVIEW-AND-FIX, FIX, RE-REVIEW, DECISION, or VERIFY.
+- Role: PLAN, PLAN-REVIEW, IMPLEMENT, REVIEW, REVIEW-AND-FIX, FIX, RE-REVIEW, or DECISION.
 - Assigned execution level.
 - Maximum authorized level.
 - Explicit task/review scope.
@@ -19,7 +19,7 @@ Large multi-file implementation may remain L2 when architecture, interfaces, sch
 
 ## Workflow
 
-Use `IMPLEMENT → REVIEW → FIX → RE-REVIEW → VERIFY`. There is no mandatory HANDOFF phase or handoff document. Use a narrowly scoped DECISION session for an unresolved L3 question.
+Use `IMPLEMENT → REVIEW → FIX → RE-REVIEW → COMPLETE`. Verification is part of IMPLEMENT/FIX completion evidence and is independently checked or supplemented inside REVIEW/RE-REVIEW. There is no mandatory HANDOFF phase or handoff document.
 
 Use optional PLAN → PLAN-REVIEW when implementation needs subdivision. L2 PLAN only divides settled work; task boundaries requiring architecture, interface/schema, or domain decisions are L3. Two failed structural revisions trigger escalation rather than another review loop.
 

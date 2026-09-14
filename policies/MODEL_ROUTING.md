@@ -20,7 +20,7 @@ Repository size and file count do not by themselves make work L3. A large settle
 Every working session must state:
 
 ```text
-Role: <PLAN / PLAN-REVIEW / IMPLEMENT / REVIEW / REVIEW-AND-FIX / FIX / RE-REVIEW / DECISION / VERIFY>
+Role: <PLAN / PLAN-REVIEW / IMPLEMENT / REVIEW / REVIEW-AND-FIX / FIX / RE-REVIEW / DECISION>
 Assigned execution level: <L0 / L1 / L2 / L3>
 Maximum authorized level: <L0 / L1 / L2 / L3>
 Task or review scope: <explicit scope>
@@ -44,11 +44,10 @@ Mechanical subdivision is allowed below L3 only when boundaries, interfaces, sch
 - **PLAN:** L2 when mechanically subdividing settled work; L3 when task boundaries require architecture, interface/schema, or domain decisions.
 - **PLAN-REVIEW:** verify each task and directly amend the plan to an approvable form when authority is sufficient. Plan edits do not require another independent review.
 - **IMPLEMENT:** normally L0-L2. L3 implementation is allowed only when the session explicitly has L3 authority.
-- **REVIEW:** authorize to the risk of the reviewed change. Use fresh context for meaningful changes.
+- **REVIEW:** authorize up to L3 according to change risk. Review includes independent, risk-based verification.
 - **REVIEW-AND-FIX:** allowed for localized, unambiguous, low-risk corrections within the session maximum. Record the finding, fix it, run verification, and close it in one session.
 - **FIX:** L0-L2 for an explicit localized correction; L3 for architecture, semantics, or uncertain root cause.
-- **RE-REVIEW:** independently verify the selected findings and the fix scope; do not assume the fixer is correct.
+- **RE-REVIEW:** independently review and verify the selected findings and fix scope; authorization may reach L3.
 - **DECISION:** resolve only the named L3 question and produce constraints plus acceptance criteria. Do not broaden into unrelated implementation.
-- **VERIFY:** run and record the required checks; passing commands do not override unresolved semantic doubt.
 
 Specialization may influence which model the user selects, but selection is external to this policy. Current model preferences belong in user/session configuration, not the repository.

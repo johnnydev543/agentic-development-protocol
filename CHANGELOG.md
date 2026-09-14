@@ -6,11 +6,12 @@
 - Redefined L0-L3 as task decision risk rather than model capability.
 - Added mandatory per-session Role, Assigned execution level, Maximum authorized level, and explicit scope.
 - Added a hard authorization boundary: classification above the maximum requires immediate escalation before planning, decomposition, design, or edits.
-- Replaced the mandatory HANDOFF lifecycle with IMPLEMENT → REVIEW → FIX → RE-REVIEW → VERIFY and an optional narrowly scoped L3 DECISION session.
+- Replaced the mandatory HANDOFF lifecycle with IMPLEMENT → REVIEW → FIX → RE-REVIEW → COMPLETE and an optional narrowly scoped L3 DECISION session.
 - Restored Git only as an optional reproducible review checkpoint, not a model handoff prerequisite.
 - Added `FIXED-PENDING-REVIEW`; only fresh RE-REVIEW may finalize `FIXED`.
 - Added optional PLAN and PLAN-REVIEW roles with `PLN-###` findings and a two-revision stop rule for structural plan rejection.
 - Allowed PLAN-REVIEW to amend and approve plans directly, and added REVIEW-AND-FIX for verified localized low-risk defects; independent re-review remains mandatory for defined high-risk categories.
+- Integrated verification into REVIEW, REVIEW-AND-FIX, and RE-REVIEW instead of retaining a separate VERIFY role. Review authorization may reach L3, and independent verification is risk-based rather than an unconditional full-suite rerun.
 
 ## v0.2.1 — 2026-09-12
 
