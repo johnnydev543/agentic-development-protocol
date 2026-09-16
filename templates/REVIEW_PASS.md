@@ -6,7 +6,7 @@ Role: <REVIEW / REVIEW-AND-FIX>
 Maximum authorized level: <L0/L1/L2/L3>
 Task: <optional natural-language scope>
 
-Keep the selected role for the entire session. Read AGENTS.md, policies/CODE_REVIEW.md, the controlling specification, current changes, checkpoint/branch state, docs/review-findings.md, relevant tests, and submitted verification. Use fresh context for meaningful changes.
+Keep the selected role for the entire session. Read AGENTS.md, policies/CODE_REVIEW.md, the controlling specification, current changes, checkpoint/branch state, relevant active entries in docs/review-findings.md, relevant tests, and submitted verification. Do not load docs/review-archive/ by default. Use fresh context for meaningful changes.
 
 Infer and report:
 - Required review level.

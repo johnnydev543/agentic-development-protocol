@@ -1,4 +1,4 @@
-# AI Agent Routing
+# Agentic Development Protocol
 
 A model-agnostic policy for authorized coding sessions, review checkpoints, escalation, and verified repair.
 
@@ -134,6 +134,8 @@ Use REVIEW-AND-FIX to close eligible localized L0-L2 defects in one verified ses
 
 Optional standalone review reports use `NNNN_REVIEW_SCOPE.md` and the lightweight `docs/0000_DOCUMENT_INDEX.md`. This document-number sequence is independent of `RVW-###` and does not apply to specs, plans, architecture records, or policies.
 
+Stable `FIXED` findings move out of the active ledger into numbered files under `docs/review-archive/`. Active sessions do not read archives by default. See `policies/REVIEW_ARCHIVE.md` and `scripts/archive_review_findings.py`.
+
 ## Failure Rule
 
 After two materially different unsuccessful fixes for the same failure, stop. Do not attempt a third speculative change. Return the evidence package in `policies/ESCALATION.md`.
@@ -204,6 +206,7 @@ policies/
   DEVELOPMENT_LIFECYCLE.md
   ESCALATION.md
   CODE_REVIEW.md
+  REVIEW_ARCHIVE.md
 templates/
   SESSION_AUTHORIZATION.md
   PLAN_TASKS.md
@@ -217,6 +220,8 @@ templates/
   AGENTS.high-risk.md
 examples/
   financial-project/AGENTS.md
+scripts/
+  archive_review_findings.py
 ```
 
 ## Adoption

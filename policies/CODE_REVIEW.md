@@ -64,6 +64,8 @@ The reviewer must not silently rewrite domain semantics. Any finding that change
 
 When review and repair happen in different sessions, do not depend on chat history. Persist actionable findings in `docs/review-findings.md`.
 
+Keep that file as an active ledger, not an unlimited history. Archive stable `FIXED` entries according to `policies/REVIEW_ARCHIVE.md`. Do not load archives by default; search them only for an explicit historical reference, regression investigation, or required decision evidence.
+
 If a standalone review report is needed, name it `NNNN_REVIEW_SCOPE.md` and register the next unused review document number in `docs/0000_DOCUMENT_INDEX.md`. This numbering applies only to standalone review reports; the findings ledger keeps its stable filename and separate `RVW-###` IDs.
 
 Recommended format:

@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.6 — 2026-09-16
+
+- Renamed the project to Agentic Development Protocol.
+- Added an active-ledger/archive policy and reusable archiving script so stable FIXED findings do not consume normal session context.
+
 ## v0.5 — 2026-09-14
 
 - Removed named-model mappings and `MODEL_REGISTRY.md`; model selection now lives outside repository policy.

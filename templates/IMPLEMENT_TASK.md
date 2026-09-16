@@ -6,7 +6,7 @@ Role: IMPLEMENT
 Maximum authorized level: <L0/L1/L2/L3>
 Task: <optional; initial task or finding correction>
 
-Keep Role: IMPLEMENT for the entire session. Read AGENTS.md, the controlling specification, current changes, docs/review-findings.md when present, and directly relevant files/tests.
+Keep Role: IMPLEMENT for the entire session. Read AGENTS.md, the controlling specification, current changes, relevant active entries in docs/review-findings.md when present, and directly relevant files/tests. Do not load docs/review-archive/ by default.
 
 Infer and report:
 - Required task level.

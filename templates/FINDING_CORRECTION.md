@@ -6,7 +6,7 @@ Role: IMPLEMENT
 Maximum authorized level: <L0/L1/L2/L3>
 Task: <optional RVW-### IDs; infer relevant OPEN findings when omitted>
 
-Keep Role: IMPLEMENT for the whole session. Read AGENTS.md, OPEN findings in docs/review-findings.md, the controlling specification, and referenced files/tests. Infer and report the relevant finding scope; ask only when unrelated OPEN groups cannot be matched safely.
+Keep Role: IMPLEMENT for the whole session. Read relevant OPEN findings in docs/review-findings.md, the controlling specification, and referenced files/tests. Do not load docs/review-archive/ unless an active finding explicitly requires historical evidence. Infer and report the relevant finding scope; ask only when unrelated OPEN groups cannot be matched safely.
 
 If a required correction exceeds Maximum authorized level, do not plan, architecturally decompose, design, or edit. Output only ESCALATION_REQUIRED and stop.
 
